@@ -1,6 +1,6 @@
 # Agentic BI Assistant
 
-> A natural-language business intelligence assistant for health datasets, built as the Day 5 capstone of the [Agentic AI Academy](https://www.dataroots.io) by [dataroots](https://www.dataroots.io).
+> A natural-language business intelligence assistant for health datasets, built as the Day 5 exercise of the [Agentic AI Academy](https://www.dataroots.io) by [dataroots](https://www.dataroots.io).
 
 ## Credits
 
