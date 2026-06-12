@@ -1,0 +1,116 @@
+# Evaluation benchmark for the Agentic BI Assistant.
+#
+# Each question has a known gold answer used by tests/eval/runner.py.
+# Evaluation strategy (per runner.py):
+#   1. Numeric questions → extract number from answer, compare with ±1% tolerance.
+#   2. List questions    → LLM-as-judge (semantic match).
+#   3. Table questions   → check the result set shape / key values.
+
+questions:
+
+  # ── coherent ─────────────────────────────────────────────────────────────
+  - id: coherent_patient_count
+    dataset: coherent
+    question: "How many patients are in the coherent dataset?"
+    gold_type: numeric
+    gold_value: 3539
+    tolerance: 0.0   # exact — small table, known value
+
+  - id: coherent_top5_conditions
+    dataset: coherent
+    question: "What are the top 5 conditions by patient count, by name?"
+    gold_type: list
+    gold_hint: "Should include common conditions like hypertension, diabetes, prediabetes"
+
+  - id: coherent_avg_claim_cost
+    dataset: coherent
+    question: "What is the average total claim cost per encounter class?"
+    gold_type: table
+    gold_hint: "Should return encounter classes (e.g. ambulatory, inpatient, emergency) with average costs"
+
+  - id: coherent_top_medications
+    dataset: coherent
+    question: "What are the top 5 most prescribed medications by name?"
+    gold_type: list
+    gold_hint: "Should include common medications like statins, metformin, etc."
+
+  # ── synthea ───────────────────────────────────────────────────────────────
+  - id: synthea_person_count
+    dataset: synthea
+    question: "How many persons are in the synthea cohort?"
+    gold_type: numeric
+    gold_value: 235222
+    tolerance: 0.01   # ±1%
+
+  - id: synthea_top_conditions
+    dataset: synthea
+    question: "What are the top 10 condition concept IDs by distinct patient count in synthea?"
+    gold_type: table
+    gold_hint: "Should return concept_id + patient_count pairs, ordered descending"
+
+  # ── synpuf ────────────────────────────────────────────────────────────────
+  - id: synpuf_beneficiary_count_by_gender
+    dataset: synpuf
+    question: "How many beneficiaries are there in synpuf, broken down by gender concept ID?"
+    gold_type: table
+    gold_hint: "Should return gender_concept_id (8507=male, 8532=female) and count"
+
+  - id: synpuf_avg_visits_per_beneficiary
+    dataset: synpuf
+    question: "What is the average number of visits per beneficiary in synpuf?"
+    gold_type: numeric
+    gold_hint: "Typically a small number like 5–20 depending on the dataset slice"
+    tolerance: 0.05
+
+  # ── cord19 ────────────────────────────────────────────────────────────────
+  - id: cord19_papers_per_year
+    dataset: cord19
+    question: "How many COVID-19 papers were published per year in the cord19 dataset?"
+    gold_type: table
+    gold_hint: "Should show years (2000–2022) with paper counts; 2020 should be the largest year"
+
+  - id: cord19_total_papers
+    dataset: cord19
+    question: "How many papers are in the cord19 dataset in total?"
+    gold_type: numeric
+    gold_value: 161020
+    tolerance: 0.05   # ±5% — exact count varies by data load
+
+  - id: cord19_top_journals
+    dataset: cord19
+    question: "What are the top 5 journals by paper count in cord19?"
+    gold_type: list
+    gold_hint: "Should include major journals like medRxiv, bioRxiv, PLOS ONE, etc."
+
+  - id: cord19_remdesivir_papers
+    dataset: cord19
+    question: "How many papers mention remdesivir in the title or abstract?"
+    gold_type: numeric
+    gold_hint: "Should be in the hundreds"
+    tolerance: 0.10
+
+  # ── open_targets ──────────────────────────────────────────────────────────
+  - id: ot_brca1_top_diseases
+    dataset: open_targets
+    question: "Which diseases are most strongly associated with BRCA1 in open_targets?"
+    gold_type: list
+    gold_hint: "Should include breast cancer, ovarian cancer and related conditions"
+
+  - id: ot_top_associations
+    dataset: open_targets
+    question: "What are the highest-scoring target–disease associations overall in open_targets?"
+    gold_type: table
+    gold_hint: "Should return targetId, diseaseId, score ordered by score descending"
+
+  # ── clarification behaviour ───────────────────────────────────────────────
+  - id: clarification_ambiguous
+    dataset: any
+    question: "Show me the data"
+    gold_type: clarification
+    gold_hint: "Agent must ask for clarification instead of querying — question is too vague"
+
+  - id: clarification_schema_mismatch
+    dataset: any
+    question: "Join the patients from coherent and synpuf together"
+    gold_type: clarification
+    gold_hint: "Agent must refuse or warn — cross-schema join violates rule 3"

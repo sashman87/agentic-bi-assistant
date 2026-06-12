@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agentic BI Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Chart.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ── Header ──────────────────────────────────────────────────────────── -->
+<header id="header">
+  <h1>🩺 Agentic BI Assistant <span>health-open-data</span></h1>
+  <div id="token-display" title="Token usage for the last response">—</div>
+</header>
+
+<!-- ── Layout ──────────────────────────────────────────────────────────── -->
+<div id="layout">
+
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div id="sidebar-header">
+      <button id="new-btn">＋ New conversation</button>
+    </div>
+    <div id="conv-list"></div>
+  </nav>
+
+  <!-- Main chat area -->
+  <div id="chat-wrap">
+
+    <!-- Resume banner (shown when continuing a previous session) -->
+    <div id="resume-banner"></div>
+
+    <!-- Empty state -->
+    <div id="empty-state">
+      <div class="icon">💬</div>
+      <p>Ask a question about the health datasets</p>
+      <p style="font-size:.8rem">e.g. "How many patients are in the coherent dataset?"</p>
+    </div>
+
+    <!-- Messages -->
+    <div id="messages" style="display:none"></div>
+
+    <!-- Input -->
+    <div id="input-area">
+      <form id="input-form">
+        <textarea
+          id="msg-input"
+          rows="1"
+          placeholder="Ask a question about the data…"
+          disabled
+        ></textarea>
+        <button id="send-btn" type="submit" disabled>Send</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Session resume modal ─────────────────────────────────────────────── -->
+<div id="modal-overlay">
+  <div id="modal">
+    <h2>👋 Welcome back!</h2>
+    <p>You have previous conversations. Continue where you left off, or start fresh.</p>
+    <div id="prev-conv-list" class="prev-conv-list"></div>
+    <div class="modal-btns">
+      <button class="btn btn-secondary" id="modal-new-btn">Start new</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

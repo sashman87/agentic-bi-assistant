@@ -1,0 +1,65 @@
+# PII masking rules for the Agentic BI assistant.
+#
+# Structure: masking.<dataset>.<table> → list of column rules.
+#
+# Masking styles:
+#   redact            → [REDACTED]
+#   mask_all          → **** (all chars replaced)
+#   mask_keep_start   → J*** (keep first visible_chars, mask rest)
+#   mask_keep_end     → ***6789 (keep last visible_chars, mask start)
+#   mask_keep_first_half → Jon***** (keep first half, mask rest)
+#   mask_email        → j****@gmail.com (keep first char + domain)
+#   suppress          → column is removed from output entirely
+#
+# Rules apply to both execute_sql and get_sample_rows results.
+# SQL string literals shown to users are separately censored to '****'.
+
+masking:
+  coherent:
+    patients:
+      - column: first
+        style: mask_keep_start
+        visible_chars: 1
+      - column: last
+        style: mask_keep_start
+        visible_chars: 1
+      - column: maiden
+        style: mask_keep_first_half
+      - column: prefix
+        style: mask_all
+      - column: suffix
+        style: mask_all
+      - column: ssn
+        style: mask_keep_end
+        visible_chars: 4
+      - column: drivers
+        style: mask_keep_end
+        visible_chars: 4
+      - column: passport
+        style: redact
+      - column: address
+        style: redact
+      - column: lat
+        style: suppress
+      - column: lon
+        style: suppress
+      - column: birthplace
+        style: redact
+
+  synpuf:
+    person:
+      - column: person_source_value
+        style: mask_all
+    provider:
+      - column: provider_name
+        style: mask_keep_first_half
+      - column: provider_source_value
+        style: mask_all
+      - column: npi
+        style: mask_keep_end
+        visible_chars: 4
+
+  synthea:
+    person:
+      - column: person_source_value
+        style: mask_all

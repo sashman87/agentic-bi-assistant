@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+
+# Secrets — never commit
+.env
+
+# Claude Code local config and third-party skills
+.claude/
+
+# Dataroots exercise materials (credited in README.md, not copied)
+/assets/
+README_DR_ORIG.md
+exercise/agentic-bi-capstone.md
+exercise/.gitkeep
+
+# Generated outputs
+tests/eval/results.json

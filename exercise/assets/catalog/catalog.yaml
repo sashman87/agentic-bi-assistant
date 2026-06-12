@@ -1,0 +1,5021 @@
+catalog_version: 1.0.0
+container: health-open-data
+generated_at: '2026-06-01T11:47:50+00:00'
+profiled_from_first_n: 100000
+stats_note: Column stats are sampled from the first N rows; row_count is exact.
+datasets:
+- name: synpuf
+  description: OMOP CDM 5.2 — ~100k synthetic Medicare beneficiaries (CMS DE-SynPUF). Claims-derived enrollment,
+    conditions, drugs, procedures. Includes the OMOP dimension/admin tables that synthea lacks.
+  tables:
+  - name: care_site
+    row_count: 320545
+    columns:
+    - name: care_site_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 108845
+      min: '1'
+      max: '320544'
+      description: Identifier (care site id).
+    - name: care_site_name
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The name of the care_site as it appears in the source data.
+    - name: place_of_service_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3
+      min: '8717'
+      max: '8940'
+      samples:
+      - '8717'
+      - '8940'
+      - '8756'
+      description: OMOP standard concept id for place of service (raw integer; no vocabulary table loaded).
+    - name: location_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The location_id from the LOCATION table representing the physical location of the care_site.
+      references: location.location_id
+    - name: care_site_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 96721
+      min: 000001668
+      max: '999946206'
+      description: The identifier of the care_site as it appears in the source data.
+    - name: place_of_service_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3
+      min: ' '
+      max: Outpatient Facility
+      samples:
+      - ' '
+      - Inpatient Facility
+      - Outpatient Facility
+      description: Verbatim place of service value from the source data (often a numeric code).
+  - name: condition_era
+    row_count: 9788262
+    columns:
+    - name: condition_era_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 110771
+      min: '3564'
+      max: '2393047'
+      description: Identifier (condition era id).
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 867
+      min: '34'
+      max: '24215'
+      description: The person this condition era belongs to.
+      references: person.person_id
+    - name: condition_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4908
+      min: '0'
+      max: '46272970'
+      description: OMOP standard concept id for condition (raw integer; no vocabulary table loaded).
+    - name: condition_era_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-20'
+      max: '2010-12-31'
+      description: The start date for the Condition Era constructed from the individual instances of Condition
+        Occurrences.
+    - name: condition_era_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2008-01-01'
+      max: '2010-12-31'
+      description: The end date for the Condition Era constructed from the individual instances of Condition
+        Occurrences.
+    - name: condition_occurrence_count
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 25
+      min: '1'
+      max: '43'
+      samples:
+      - '1'
+      - '22'
+      - '18'
+      - '20'
+      - '43'
+      - '8'
+      description: The number of individual Condition Occurrences used to construct the condition era.
+  - name: condition_occurrence
+    row_count: 12695221
+    columns:
+    - name: condition_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 79116
+      min: '4805'
+      max: '2401239'
+      description: The unique key given to a condition record for a person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 615
+      min: '34'
+      max: '18676'
+      description: The PERSON_ID of the PERSON for whom the condition is recorded.
+      references: person.person_id
+    - name: condition_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4664
+      min: '0'
+      max: '46272970'
+      description: OMOP standard concept id for condition (raw integer; no vocabulary table loaded).
+    - name: condition_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-20'
+      max: '2010-12-31'
+      description: Use this date to determine the start date of the condition.
+    - name: condition_start_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1330
+      min: '2007-12-20 00:00:00'
+      max: '2010-12-31 00:00:00'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: condition_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2008-01-01'
+      max: '2010-12-31'
+      description: Use this date to determine the end date of the condition.
+    - name: condition_end_datetime
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: condition_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '38000200'
+      max: '38000230'
+      samples:
+      - '38000230'
+      - '38000200'
+      description: Provenance/type of the condition record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: stop_reason
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The Stop Reason indicates why a Condition is no longer valid with respect to the purpose
+        within the source data.
+    - name: provider_id
+      type: BIGINT
+      null_count: 302
+      approx_distinct: 31110
+      min: '5'
+      max: '325429'
+      description: The provider associated with condition record.
+      references: provider.provider_id
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 32950
+      min: '1762'
+      max: '905178'
+      description: The visit during which the condition occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: condition_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 6396
+      min: '00322'
+      max: V8904
+      description: This field houses the verbatim value from the source data representing the condition
+        that occurred.
+    - name: condition_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 6544
+      min: '2617506'
+      max: '44837878'
+      description: Source-vocabulary concept id for condition (raw integer; no vocabulary loaded).
+    - name: condition_status_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 6396
+      min: '00322'
+      max: V8904
+      description: This field houses the verbatim value from the source data representing the condition
+        status.
+    - name: condition_status_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for condition status (raw integer; no vocabulary table loaded).
+  - name: death
+    row_count: 4635
+    columns:
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3933
+      min: '988'
+      max: '2326770'
+      description: Identifier (person id).
+      references: person.person_id
+    - name: death_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 40
+      min: '2008-01-01'
+      max: '2010-12-01'
+      description: The date the person was deceased.
+    - name: death_datetime
+      type: VARCHAR
+      null_count: 4635
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: death_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '38003565'
+      max: '38003565'
+      samples:
+      - '38003565'
+      description: Provenance/type of the death record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: cause_concept_id
+      type: VARCHAR
+      null_count: 4635
+      approx_distinct: 0
+      min: null
+      max: null
+      description: OMOP standard concept id for cause (raw integer; no vocabulary table loaded).
+    - name: cause_source_value
+      type: VARCHAR
+      null_count: 4635
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Verbatim cause value from the source data (often a numeric code).
+    - name: cause_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for cause (raw integer; no vocabulary loaded).
+  - name: device_exposure
+    row_count: 202805
+    columns:
+    - name: device_exposure_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 110177
+      min: '150'
+      max: '2138564'
+      description: The unique key given to records a person's exposure to a foreign physical object or
+        instrument.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 17075
+      min: '34'
+      max: '1112175'
+      description: Identifier (person id).
+      references: person.person_id
+    - name: device_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 607
+      min: '0'
+      max: '40664841'
+      description: OMOP standard concept id for device (raw integer; no vocabulary table loaded).
+    - name: device_exposure_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-13'
+      max: '2010-12-31'
+      description: Use this date to determine the start date of the device record.
+    - name: device_exposure_start_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1
+      min: '1900-01-01 00:00:00'
+      max: '1900-01-01 00:00:00'
+      samples:
+      - '1900-01-01 00:00:00'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: device_exposure_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2008-01-01'
+      max: '2010-12-31'
+      description: The DEVICE_EXPOSURE_END_DATE denotes the day the device exposure ended for the patient,
+        if given.
+    - name: device_exposure_end_datetime
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: device_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '44818705'
+      max: '44818705'
+      samples:
+      - '44818705'
+      description: Provenance/type of the device record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: unique_device_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the Unique Device Identification number for devices regulated by the FDA, if
+        given.
+    - name: quantity
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Quantity (VARCHAR).
+    - name: provider_id
+      type: BIGINT
+      null_count: 367
+      approx_distinct: 24937
+      min: '2'
+      max: '868920'
+      description: The Provider associated with device record.
+      references: provider.provider_id
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 36200
+      min: '1771'
+      max: '53336232'
+      description: The Visit during which the device was prescribed or given.
+      references: visit_occurrence.visit_occurrence_id
+    - name: device_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 701
+      min: A4206
+      max: V5267
+      description: This field houses the verbatim value from the source data representing the device exposure
+        that occurred.
+    - name: device_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 632
+      min: '2614686'
+      max: '40663812'
+      description: Source-vocabulary concept id for device (raw integer; no vocabulary loaded).
+  - name: drug_era
+    row_count: 5365324
+    columns:
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1631
+      min: '34'
+      max: '43110'
+      description: Identifier (person id).
+      references: person.person_id
+    - name: drug_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1927
+      min: '501343'
+      max: '46221581'
+      description: OMOP standard concept id for drug (raw integer; no vocabulary table loaded).
+    - name: drug_era_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-20'
+      max: '2010-12-31'
+      description: Drug era start date (VARCHAR).
+    - name: drug_era_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1399
+      min: '2007-12-20'
+      max: '2011-03-31'
+      description: Drug era end date (VARCHAR).
+    - name: drug_exposure_count
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 37
+      min: '1'
+      max: '71'
+      description: The count of grouped DRUG_EXPOSURE records that were included in the DRUG_ERA row.
+    - name: gap_days
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Gap days (VARCHAR).
+    - name: drug_era_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 101155
+      min: '1792'
+      max: '2304231'
+      description: Identifier (drug era id).
+  - name: drug_exposure
+    row_count: 5423469
+    columns:
+    - name: drug_exposure_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 102041
+      min: '1955'
+      max: '2285360'
+      description: The unique key given to records of drug dispensings or administrations for a person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1682
+      min: '34'
+      max: '42500'
+      description: The PERSON_ID of the PERSON for whom the drug dispensing or administration is recorded.
+      references: person.person_id
+    - name: drug_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 9503
+      min: '0'
+      max: '46287625'
+      description: OMOP standard concept id for drug (raw integer; no vocabulary table loaded).
+    - name: drug_exposure_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-20'
+      max: '2010-12-31'
+      description: Use this date to determine the start date of the drug record.
+    - name: drug_exposure_start_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1330
+      min: '2007-12-20 00:00:00'
+      max: '2010-12-31 00:00:00'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: drug_exposure_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1399
+      min: '2007-12-20'
+      max: '2011-03-31'
+      description: The DRUG_EXPOSURE_END_DATE denotes the day the drug exposure ended for the patient.
+    - name: drug_exposure_end_datetime
+      type: VARCHAR
+      null_count: 12204
+      approx_distinct: 1526
+      min: '2008-01-03 00:00:00'
+      max: '2011-03-31 00:00:00'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: verbatim_end_date
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the end date of the drug exposure as it appears in the source data, if it is
+        given.
+    - name: drug_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '38000175'
+      max: '38000175'
+      samples:
+      - '38000175'
+      description: Provenance/type of the drug record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: stop_reason
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The reason a person stopped a medication as it is represented in the source.
+    - name: refills
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Number of refills authorized, when the record comes from a prescription.
+    - name: quantity
+      type: BIGINT
+      null_count: 12204
+      approx_distinct: 48
+      min: '0'
+      max: '360'
+      description: Quantity (BIGINT).
+    - name: days_supply
+      type: BIGINT
+      null_count: 12204
+      approx_distinct: 11
+      min: '0'
+      max: '90'
+      samples:
+      - '40'
+      - None
+      - '20'
+      - '80'
+      - '30'
+      - '60'
+      description: The number of days of supply of the medication as recorded in the original prescription
+        or dispensing record.
+    - name: sig
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the verbatim instruction for the drug as written by the provider.
+    - name: route_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: OMOP standard concept id for route (raw integer; no vocabulary table loaded).
+    - name: lot_number
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Lot number (VARCHAR).
+    - name: provider_id
+      type: BIGINT
+      null_count: 87829
+      approx_distinct: 4759
+      min: '5'
+      max: '469157'
+      description: The Provider associated with drug record.
+      references: provider.provider_id
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 87796
+      approx_distinct: 8521
+      min: '1770'
+      max: '2052216'
+      description: The Visit during which the drug was prescribed, administered or dispensed.
+      references: visit_occurrence.visit_occurrence_id
+    - name: drug_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 67398
+      min: '00002000001'
+      max: S0020
+      description: This field houses the verbatim value from the source data representing the drug exposure
+        that occurred.
+    - name: drug_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 72010
+      min: '2213427'
+      max: '45383582'
+      description: Source-vocabulary concept id for drug (raw integer; no vocabulary loaded).
+    - name: route_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the drug route.
+    - name: dose_unit_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the dose unit
+        of the drug given.
+  - name: drug_strength
+    row_count: 2430381
+    columns:
+    - name: drug_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 69310
+      min: '501343'
+      max: '21036281'
+      description: OMOP standard concept id for drug (raw integer; no vocabulary table loaded).
+    - name: ingredient_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4054
+      min: '501343'
+      max: '46287466'
+      description: OMOP standard concept id for ingredient (raw integer; no vocabulary table loaded).
+    - name: amount_value
+      type: DOUBLE
+      null_count: 50481
+      approx_distinct: 1053
+      min: '0.00012'
+      max: '6000000000.0'
+      description: The numeric value or the amount of active ingredient contained within the drug product.
+    - name: amount_unit_concept_id
+      type: BIGINT
+      null_count: 44856
+      approx_distinct: 24
+      min: '8510'
+      max: '45744815'
+      samples:
+      - '9573'
+      - '9276'
+      - '45744814'
+      - '8587'
+      - '8554'
+      - '45744812'
+      description: OMOP standard concept id for amount unit (raw integer; no vocabulary table loaded).
+    - name: numerator_value
+      type: DOUBLE
+      null_count: 55144
+      approx_distinct: 1648
+      min: 2e-06
+      max: '50000000000.0'
+      description: The concentration of the active ingredient contained within the drug product.
+    - name: numerator_unit_concept_id
+      type: BIGINT
+      null_count: 55144
+      approx_distinct: 18
+      min: '8510'
+      max: '45744816'
+      samples:
+      - '9573'
+      - '45744813'
+      - None
+      - '8510'
+      - '9551'
+      - '9325'
+      description: OMOP standard concept id for numerator unit (raw integer; no vocabulary table loaded).
+    - name: denominator_value
+      type: DOUBLE
+      null_count: 95003
+      approx_distinct: 175
+      min: '0.05'
+      max: '10000000.0'
+      description: The amount of total liquid (or other divisible product, such as ointment, gel, spray,
+        etc.).
+    - name: denominator_unit_concept_id
+      type: BIGINT
+      null_count: 55550
+      approx_distinct: 5
+      min: '8505'
+      max: '45744809'
+      samples:
+      - '8587'
+      - '9483'
+      - '8576'
+      - None
+      - '45744809'
+      - '8505'
+      description: OMOP standard concept id for denominator unit (raw integer; no vocabulary table loaded).
+    - name: box_size
+      type: BIGINT
+      null_count: 93585
+      approx_distinct: 74
+      min: '1'
+      max: '5000'
+      description: Units of the drug contained in a dispensed box.
+    - name: valid_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 90
+      min: '1970-01-01'
+      max: '2017-08-24'
+      description: The date when the Concept was first recorded.
+    - name: valid_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2
+      min: '2017-08-06'
+      max: '2099-12-31'
+      samples:
+      - '2099-12-31'
+      - '2017-08-06'
+      description: The date when then Concept became invalid.
+    - name: invalid_reason
+      type: VARCHAR
+      null_count: 99997
+      approx_distinct: 1
+      min: D
+      max: D
+      samples:
+      - None
+      - D
+      description: Reason the concept was invalidated.
+  - name: location
+    row_count: 3185
+    columns:
+    - name: location_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3219
+      min: '1'
+      max: '3185'
+      description: The unique key given to a unique Location.
+    - name: address_1
+      type: VARCHAR
+      null_count: 3185
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the first line of the address.
+    - name: address_2
+      type: VARCHAR
+      null_count: 3185
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the second line of the address.
+    - name: city
+      type: VARCHAR
+      null_count: 3185
+      approx_distinct: 0
+      min: null
+      max: null
+      description: City (VARCHAR).
+    - name: state
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 57
+      min: '54'
+      max: WY
+      description: State (VARCHAR).
+    - name: zip
+      type: VARCHAR
+      null_count: 3185
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Zip (VARCHAR).
+    - name: county
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3614
+      min: '1000'
+      max: '54999'
+      description: County (BIGINT).
+    - name: location_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3780
+      min: 01-000
+      max: 54-999
+      description: Verbatim location value from the source data (often a numeric code).
+  - name: measurement
+    row_count: 2909229
+    columns:
+    - name: measurement_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 115173
+      min: '1123'
+      max: '2305125'
+      description: The unique key given to a Measurement record for a Person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2849
+      min: '34'
+      max: '79025'
+      description: The PERSON_ID of the Person for whom the Measurement is recorded.
+      references: person.person_id
+    - name: measurement_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 749
+      min: '0'
+      max: '40757083'
+      description: OMOP standard concept id for measurement (raw integer; no vocabulary table loaded).
+    - name: measurement_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-20'
+      max: '2010-12-31'
+      description: Use this date to determine the date of the measurement.
+    - name: measurement_datetime
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: measurement_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '45754907'
+      max: '45754907'
+      samples:
+      - '45754907'
+      description: Provenance/type of the measurement record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: operator_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: OMOP standard concept id for operator (raw integer; no vocabulary table loaded).
+    - name: value_as_number
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the numerical value of the Result of the Measurement, if available.
+    - name: value_as_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for the result value (raw integer; no vocabulary table loaded).
+    - name: unit_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: OMOP standard concept id for unit (raw integer; no vocabulary table loaded).
+    - name: range_low
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Ranges have the same unit as the VALUE_AS_NUMBER.
+    - name: range_high
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Ranges have the same unit as the VALUE_AS_NUMBER.
+    - name: provider_id
+      type: BIGINT
+      null_count: 527
+      approx_distinct: 35960
+      min: '2'
+      max: '574511'
+      description: The provider associated with measurement record.
+      references: provider.provider_id
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 57836
+      min: '1762'
+      max: '3790292'
+      description: The visit during which the Measurement occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: measurement_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 717
+      min: '79531'
+      max: V8279
+      description: This field contains the exact value from the source data that represents the measurement
+        that occurred.
+    - name: measurement_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 740
+      min: '2212089'
+      max: '44836706'
+      description: Source-vocabulary concept id for measurement (raw integer; no vocabulary loaded).
+    - name: unit_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field contains the exact value from the source data that represents the unit of
+        measurement used.
+    - name: value_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim result value of the Measurement from the source data.
+  - name: observation
+    row_count: 1655312
+    columns:
+    - name: observation_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 127031
+      min: '729'
+      max: '2284175'
+      description: The unique key given to an Observation record for a Person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4787
+      min: '34'
+      max: '137936'
+      description: The PERSON_ID of the Person for whom the Observation is recorded.
+      references: person.person_id
+    - name: observation_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 857
+      min: '0'
+      max: '45766277'
+      description: OMOP standard concept id for observation (raw integer; no vocabulary table loaded).
+    - name: observation_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-24'
+      max: '2010-12-31'
+      description: The date of when the Observation was obtained.
+    - name: observation_datetime
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: observation_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '38000282'
+      max: '38000282'
+      samples:
+      - '38000282'
+      description: Provenance/type of the observation record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: value_as_number
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the numerical value of the Result of the Observation, if applicable and available.
+    - name: value_as_string
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the categorical value of the Result of the Observation, if applicable and available.
+    - name: value_as_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for the result value (raw integer; no vocabulary table loaded).
+    - name: qualifier_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: OMOP standard concept id for qualifier (raw integer; no vocabulary table loaded).
+    - name: unit_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: OMOP standard concept id for unit (raw integer; no vocabulary table loaded).
+    - name: provider_id
+      type: BIGINT
+      null_count: 255
+      approx_distinct: 44844
+      min: '2'
+      max: '660542'
+      description: The provider associated with the observation record.
+      references: provider.provider_id
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 58423
+      min: '1762'
+      max: '6618569'
+      description: The visit during which the Observation occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: observation_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1157
+      min: 0505F
+      max: V8909
+      description: This field houses the verbatim value from the source data representing the Observation
+        that occurred.
+    - name: observation_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1192
+      min: '2101833'
+      max: '44837886'
+      description: Source-vocabulary concept id for observation (raw integer; no vocabulary loaded).
+    - name: unit_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the unit of
+        the Observation that occurred.
+    - name: qualifier_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the qualifier
+        of the Observation that occurred.
+  - name: observation_period
+    row_count: 90217
+    columns:
+    - name: observation_period_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 88252
+      min: '32'
+      max: '2098514'
+      description: A Person can have multiple discrete Observation Periods which are identified by the
+        Observation_Period_Id.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 68860
+      min: '34'
+      max: '2326855'
+      description: The Person ID of the PERSON record for which the Observation Period is recorded.
+      references: person.person_id
+    - name: observation_period_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1247
+      min: '2007-11-27'
+      max: '2010-12-27'
+      description: Use this date to determine the start date of the Observation Period.
+    - name: observation_period_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 679
+      min: '2008-01-01'
+      max: '2010-12-31'
+      description: End of the span over which the person's events are considered captured.
+    - name: period_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '44814722'
+      max: '44814722'
+      samples:
+      - '44814722'
+      description: Provenance/type of the period record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+  - name: payer_plan_period
+    row_count: 334751
+    columns:
+    - name: payer_plan_period_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 121841
+      min: '118'
+      max: '2323908'
+      description: A unique identifier for each unique combination of a Person, Payer, Plan, and Period
+        of time.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 30189
+      min: '34'
+      max: '694285'
+      description: The Person covered by the Plan.
+      references: person.person_id
+    - name: payer_plan_period_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 15
+      min: '2008-01-01'
+      max: '2010-01-01'
+      samples:
+      - '2008-08-31'
+      - '2008-03-31'
+      - '2008-10-31'
+      - '2008-06-30'
+      - '2008-01-31'
+      - '2008-09-30'
+      description: Start date of Plan coverage.
+    - name: payer_plan_period_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 49
+      min: '2008-02-01'
+      max: '2010-12-31'
+      description: End date of Plan coverage.
+    - name: payer_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the Payer as it appears in the source data.
+    - name: plan_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 4
+      min: HMO
+      max: Medicare Part D
+      samples:
+      - Medicare Part D
+      - Medicare Part A
+      - HMO
+      - Medicare Part B
+      description: This is the health benefit Plan of the Person as it appears in the source data.
+    - name: family_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The common identifier for all people (often a family) that covered by the same policy.
+  - name: person
+    row_count: 100000
+    columns:
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 77828
+      min: '34'
+      max: '2326855'
+      description: Unique person (patient) identifier — the cohort spine.
+    - name: gender_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '8507'
+      max: '8532'
+      samples:
+      - '8507'
+      - '8532'
+      description: OMOP standard concept id for gender (raw integer; no vocabulary table loaded).
+    - name: year_of_birth
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 72
+      min: '1909'
+      max: '1983'
+      description: Compute age using year_of_birth.
+    - name: month_of_birth
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 13
+      min: '1'
+      max: '12'
+      samples:
+      - '2'
+      - '1'
+      - '12'
+      - '11'
+      - '10'
+      - '5'
+      description: Month of birth (often NULL; year_of_birth is the reliable field).
+    - name: day_of_birth
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '1'
+      max: '1'
+      samples:
+      - '1'
+      description: Day of birth (often NULL; year_of_birth is the reliable field).
+    - name: birth_datetime
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: race_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3
+      min: '0'
+      max: '8527'
+      samples:
+      - '8527'
+      - '0'
+      - '8516'
+      description: OMOP standard concept id for race (raw integer; no vocabulary table loaded).
+    - name: ethnicity_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '38003563'
+      max: '38003564'
+      samples:
+      - '38003563'
+      - '38003564'
+      description: OMOP standard concept id for ethnicity (raw integer; no vocabulary table loaded).
+    - name: location_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3087
+      min: '1'
+      max: '3179'
+      description: The location refers to the physical address of the person.
+      references: location.location_id
+    - name: provider_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The Provider refers to the last known primary care provider (General Practitioner).
+      references: provider.provider_id
+    - name: care_site_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The Care Site refers to where the Provider typically provides the primary care.
+      references: care_site.care_site_id
+    - name: person_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 133243
+      min: 0000EC65FBF94AB8
+      max: FFFF91A518727496
+      description: Use this field to link back to persons in the source data.
+    - name: gender_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '1'
+      max: '2'
+      samples:
+      - '2'
+      - '1'
+      description: This field is used to store the biological sex of the person from the source data.
+    - name: gender_source_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Source-vocabulary concept id for gender (raw integer; no vocabulary loaded).
+    - name: race_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4
+      min: '1'
+      max: '5'
+      samples:
+      - '2'
+      - '5'
+      - '1'
+      - '3'
+      description: This field is used to store the race of the person from the source data.
+    - name: race_source_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Source-vocabulary concept id for race (raw integer; no vocabulary loaded).
+    - name: ethnicity_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4
+      min: '1'
+      max: '5'
+      samples:
+      - '1'
+      - '5'
+      - '3'
+      - '2'
+      description: This field is used to store the ethnicity of the person from the source data.
+    - name: ethnicity_source_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Source-vocabulary concept id for ethnicity (raw integer; no vocabulary loaded).
+  - name: procedure_occurrence
+    row_count: 11897410
+    columns:
+    - name: procedure_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 115461
+      min: '4422'
+      max: '2449611'
+      description: The unique key given to a procedure record for a person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 635
+      min: '34'
+      max: '20430'
+      description: The PERSON_ID of the PERSON for whom the procedure is recorded.
+      references: person.person_id
+    - name: procedure_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2975
+      min: '0'
+      max: '43561950'
+      description: OMOP standard concept id for procedure (raw integer; no vocabulary table loaded).
+    - name: procedure_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-20'
+      max: '2010-12-31'
+      description: Use this date to determine the date the procedure occurred.
+    - name: procedure_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1330
+      min: '2007-12-20 00:00:00'
+      max: '2010-12-31 00:00:00'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: procedure_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '38000251'
+      max: '38000269'
+      samples:
+      - '38000251'
+      - '38000269'
+      description: Provenance/type of the procedure record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: modifier_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: OMOP standard concept id for modifier (raw integer; no vocabulary table loaded).
+    - name: quantity
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: If the quantity value is omitted, a single procedure is assumed.
+    - name: provider_id
+      type: BIGINT
+      null_count: 311
+      approx_distinct: 36561
+      min: '5'
+      max: '340533'
+      description: The provider associated with the procedure record.
+      references: provider.provider_id
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 37756
+      min: '1762'
+      max: '987827'
+      description: The visit during which the procedure occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: procedure_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3506
+      min: '00100'
+      max: V829
+      description: This field houses the verbatim value from the source data representing the procedure
+        that occurred.
+    - name: procedure_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2899
+      min: '2000030'
+      max: '45890970'
+      description: Source-vocabulary concept id for procedure (raw integer; no vocabulary loaded).
+    - name: qualifier_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Verbatim qualifier/modifier code for the procedure from the source data.
+  - name: provider
+    row_count: 905492
+    columns:
+    - name: provider_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 130526
+      min: '23'
+      max: '905492'
+      description: Unique provider (clinician) identifier.
+    - name: provider_name
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field contains information that describes a healthcare provider.
+    - name: npi
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 84185
+      min: '93668'
+      max: '9999935891'
+      description: US National Provider Identifier (NPI) for the clinician.
+    - name: dea
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: US DEA registration number (controlled-substance prescribing).
+    - name: specialty_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for specialty (raw integer; no vocabulary table loaded).
+    - name: care_site_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 48421
+      min: '1'
+      max: '320516'
+      description: This is the CARE_SITE_ID for the location that the provider primarily practices in.
+      references: care_site.care_site_id
+    - name: year_of_birth
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Year of birth (often NULL; year_of_birth is the reliable field).
+    - name: gender_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for gender (raw integer; no vocabulary table loaded).
+    - name: provider_source_value
+      type: BIGINT
+      null_count: 2
+      approx_distinct: 85675
+      min: '93668'
+      max: '9999935891'
+      description: Use this field to link back to providers in the source data.
+    - name: specialty_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Provider specialty as recorded in the source data.
+    - name: specialty_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for specialty (raw integer; no vocabulary loaded).
+    - name: gender_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is provider's gender as it appears in the source data.
+    - name: gender_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for gender (raw integer; no vocabulary loaded).
+  - name: visit_occurrence
+    row_count: 4785453
+    columns:
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 105765
+      min: '1762'
+      max: '2310269'
+      description: Use this to identify unique interactions between a person and the health care system.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1793
+      min: '34'
+      max: '47904'
+      description: Identifier (person id).
+      references: person.person_id
+    - name: visit_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3
+      min: '0'
+      max: '9202'
+      samples:
+      - '9201'
+      - '0'
+      - '9202'
+      description: OMOP standard concept id for visit (raw integer; no vocabulary table loaded).
+    - name: visit_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2007-12-14'
+      max: '2010-12-31'
+      description: For inpatient visits, the start date is typically the admission date.
+    - name: visit_start_datetime
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: visit_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1373
+      min: '2008-01-01'
+      max: '2010-12-31'
+      description: For inpatient visits the end date is typically the discharge date.
+    - name: visit_end_datetime
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: visit_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '44818517'
+      max: '44818517'
+      samples:
+      - '44818517'
+      description: Provenance/type of the visit record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: provider_id
+      type: BIGINT
+      null_count: 295
+      approx_distinct: 64712
+      min: '1'
+      max: '489791'
+      description: Provider associated with the visit (one per visit record).
+      references: provider.provider_id
+    - name: care_site_id
+      type: BIGINT
+      null_count: 180
+      approx_distinct: 31292
+      min: '1'
+      max: '192687'
+      description: This field provides information about the Care Site where the Visit took place.
+      references: care_site.care_site_id
+    - name: visit_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 80213
+      min: '196011176959033'
+      max: '887993389571976'
+      description: Verbatim visit kind from the source data (e.g. inpatient/outpatient).
+    - name: visit_source_concept_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Source-vocabulary concept id for visit (raw integer; no vocabulary loaded).
+    - name: admitting_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for admitting (raw integer; no vocabulary loaded).
+    - name: admitting_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Verbatim admitting value from the source data (often a numeric code).
+    - name: discharge_to_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for discharge to (raw integer; no vocabulary table loaded).
+    - name: discharge_to_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Verbatim discharge to value from the source data (often a numeric code).
+    - name: preceding_visit_occurrence_id
+      type: BIGINT
+      null_count: 1765
+      approx_distinct: 105765
+      min: '1762'
+      max: '2309409'
+      description: Use this field to find the visit that occurred for the person prior to the given visit.
+      references: visit_occurrence.visit_occurrence_id
+- name: synthea
+  description: OMOP CDM 5.2 subset — Synthea simulation (~235k persons). Richer clinical detail (measurements/observations)
+    but no dimension/admin tables (care_site, provider, location, death, device_exposure, ...).
+  tables:
+  - name: condition_era
+    row_count: 1762194
+    columns:
+    - name: condition_era_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: Identifier (condition era id).
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 11900
+      min: '1'
+      max: '13361'
+      description: The person this condition era belongs to.
+      references: person.person_id
+    - name: condition_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 154
+      min: '0'
+      max: '45770830'
+      description: OMOP standard concept id for condition (raw integer; no vocabulary table loaded).
+    - name: condition_era_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 20082
+      min: '1909-02-26'
+      max: '2019-05-14'
+      description: The start date for the Condition Era constructed from the individual instances of Condition
+        Occurrences.
+    - name: condition_era_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 24018
+      min: '1909-02-27'
+      max: '2019-05-15'
+      description: The end date for the Condition Era constructed from the individual instances of Condition
+        Occurrences.
+    - name: condition_occurrence_count
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4
+      min: '2'
+      max: '9'
+      samples:
+      - '6'
+      - '9'
+      - '2'
+      - '3'
+      description: The number of individual Condition Occurrences used to construct the condition era.
+  - name: condition_occurrence
+    row_count: 2644530
+    columns:
+    - name: condition_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: The unique key given to a condition record for a person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 11900
+      min: '1'
+      max: '13355'
+      description: The PERSON_ID of the PERSON for whom the condition is recorded.
+      references: person.person_id
+    - name: condition_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 154
+      min: '0'
+      max: '45770830'
+      description: OMOP standard concept id for condition (raw integer; no vocabulary table loaded).
+    - name: condition_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 20082
+      min: '1909-02-26'
+      max: '2019-05-14'
+      description: Use this date to determine the start date of the condition.
+    - name: condition_start_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 20082
+      min: '1909-02-26'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: condition_end_date
+      type: VARCHAR
+      null_count: 48174
+      approx_distinct: 8325
+      min: '1911-01-29'
+      max: '2019-05-13'
+      description: Use this date to determine the end date of the condition.
+    - name: condition_end_datetime
+      type: VARCHAR
+      null_count: 48174
+      approx_distinct: 8325
+      min: '1911-01-29'
+      max: '2019-05-13'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: condition_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '32020'
+      max: '32020'
+      samples:
+      - '32020'
+      description: Provenance/type of the condition record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: stop_reason
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The Stop Reason indicates why a Condition is no longer valid with respect to the purpose
+        within the source data.
+    - name: provider_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The provider associated with condition record.
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 91
+      approx_distinct: 77701
+      min: '26'
+      max: '725314'
+      description: The visit during which the condition occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: visit_detail_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Reference to a visit_detail record — the visit_detail table is not loaded here.
+    - name: condition_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 138
+      min: '1734006'
+      max: '368581000119106'
+      description: This field houses the verbatim value from the source data representing the condition
+        that occurred.
+    - name: condition_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 177
+      min: '28060'
+      max: '45770830'
+      description: Source-vocabulary concept id for condition (raw integer; no vocabulary loaded).
+    - name: condition_status_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the condition
+        status.
+    - name: condition_status_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for condition status (raw integer; no vocabulary table loaded).
+  - name: drug_era
+    row_count: 760311
+    columns:
+    - name: drug_era_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: Identifier (drug era id).
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 13041
+      min: '1'
+      max: '15577'
+      description: Identifier (person id).
+      references: person.person_id
+    - name: drug_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 113
+      min: '701322'
+      max: '46221581'
+      description: OMOP standard concept id for drug (raw integer; no vocabulary table loaded).
+    - name: drug_era_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 17902
+      min: '1909-05-01'
+      max: '2019-05-13'
+      description: Drug era start date (VARCHAR).
+    - name: drug_era_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 17175
+      min: '1909-05-15'
+      max: '2019-05-14'
+      description: Drug era end date (VARCHAR).
+    - name: drug_exposure_count
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 70
+      min: '2'
+      max: '2430'
+      description: The count of grouped DRUG_EXPOSURE records that were included in the DRUG_ERA row.
+    - name: gap_days
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 13327
+      min: '-22146'
+      max: '18030'
+      description: Gap days (BIGINT).
+  - name: drug_exposure
+    row_count: 13927652
+    columns:
+    - name: drug_exposure_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: The unique key given to records of drug dispensings or administrations for a person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 6162
+      min: '1'
+      max: '6630'
+      description: The PERSON_ID of the PERSON for whom the drug dispensing or administration is recorded.
+      references: person.person_id
+    - name: drug_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for drug (raw integer; no vocabulary table loaded).
+    - name: drug_exposure_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 16681
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: Use this date to determine the start date of the drug record.
+    - name: drug_exposure_start_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 16681
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: drug_exposure_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 17375
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: The DRUG_EXPOSURE_END_DATE denotes the day the drug exposure ended for the patient.
+    - name: drug_exposure_end_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 17375
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: verbatim_end_date
+      type: VARCHAR
+      null_count: 47912
+      approx_distinct: 6067
+      min: '1911-01-29'
+      max: '2019-05-13'
+      description: This is the end date of the drug exposure as it appears in the source data, if it is
+        given.
+    - name: drug_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '581452'
+      max: '581452'
+      samples:
+      - '581452'
+      description: Provenance/type of the drug record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: stop_reason
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The reason a person stopped a medication as it is represented in the source.
+    - name: refills
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Number of refills authorized, when the record comes from a prescription.
+    - name: quantity
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Quantity (BIGINT).
+    - name: days_supply
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 702
+      min: '0'
+      max: '14268'
+      description: The number of days of supply of the medication as recorded in the original prescription
+        or dispensing record.
+    - name: sig
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the verbatim instruction for the drug as written by the provider.
+    - name: route_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for route (raw integer; no vocabulary table loaded).
+    - name: lot_number
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Lot number (BIGINT).
+    - name: provider_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: The Provider associated with drug record.
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 106
+      approx_distinct: 46435
+      min: '71'
+      max: '535751'
+      description: The Visit during which the drug was prescribed, administered or dispensed.
+      references: visit_occurrence.visit_occurrence_id
+    - name: visit_detail_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Reference to a visit_detail record — the visit_detail table is not loaded here.
+    - name: drug_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 138
+      min: '1734006'
+      max: '368581000119106'
+      description: This field houses the verbatim value from the source data representing the drug exposure
+        that occurred.
+    - name: drug_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 168
+      min: '28060'
+      max: '45770830'
+      description: Source-vocabulary concept id for drug (raw integer; no vocabulary loaded).
+    - name: route_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the drug route.
+    - name: dose_unit_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the dose unit
+        of the drug given.
+  - name: measurement
+    row_count: 75961209
+    columns:
+    - name: measurement_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: The unique key given to a Measurement record for a Person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4310
+      min: '1'
+      max: '3612'
+      description: The PERSON_ID of the Person for whom the Measurement is recorded.
+      references: person.person_id
+    - name: measurement_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 28
+      min: '0'
+      max: '40478878'
+      description: OMOP standard concept id for measurement (raw integer; no vocabulary table loaded).
+    - name: measurement_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 10218
+      min: '1910-03-27'
+      max: '2019-05-14'
+      description: Use this date to determine the date of the measurement.
+    - name: measurement_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 10218
+      min: '1910-03-27'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: measurement_time
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 10218
+      min: '1910-03-27'
+      max: '2019-05-14'
+      description: Measurement time (VARCHAR).
+    - name: measurement_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '5001'
+      max: '5001'
+      samples:
+      - '5001'
+      description: Provenance/type of the measurement record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: operator_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for operator (raw integer; no vocabulary table loaded).
+    - name: value_as_number
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the numerical value of the Result of the Measurement, if available.
+    - name: value_as_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for the result value (raw integer; no vocabulary table loaded).
+    - name: unit_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for unit (raw integer; no vocabulary table loaded).
+    - name: range_low
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Ranges have the same unit as the VALUE_AS_NUMBER.
+    - name: range_high
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Ranges have the same unit as the VALUE_AS_NUMBER.
+    - name: provider_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: The provider associated with measurement record.
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 1616
+      approx_distinct: 62121
+      min: '40'
+      max: '448856'
+      description: The visit during which the Measurement occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: visit_detail_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Reference to a visit_detail record — the visit_detail table is not loaded here.
+    - name: measurement_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 129
+      min: '1015401000000102'
+      max: '91602002'
+      description: This field contains the exact value from the source data that represents the measurement
+        that occurred.
+    - name: measurement_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 125
+      min: '0'
+      max: '45766298'
+      description: Source-vocabulary concept id for measurement (raw integer; no vocabulary loaded).
+    - name: unit_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field contains the exact value from the source data that represents the unit of
+        measurement used.
+    - name: value_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim result value of the Measurement from the source data.
+  - name: observation
+    row_count: 2808597
+    columns:
+    - name: observation_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 49855
+      min: '1'
+      max: '54689'
+      description: The unique key given to an Observation record for a Person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 17893
+      min: '1'
+      max: '117607'
+      description: The PERSON_ID of the Person for whom the Observation is recorded.
+      references: person.person_id
+    - name: observation_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 29
+      min: '0'
+      max: '45766064'
+      description: OMOP standard concept id for observation (raw integer; no vocabulary table loaded).
+    - name: observation_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 20776
+      min: '1909-05-12'
+      max: '2019-05-14'
+      description: The date of when the Observation was obtained.
+    - name: observation_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 20776
+      min: '1909-05-12'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: observation_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '38000276'
+      max: '38000280'
+      samples:
+      - '38000280'
+      - '38000276'
+      description: Provenance/type of the observation record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: value_as_number
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the numerical value of the Result of the Observation, if applicable and available.
+    - name: value_as_string
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This is the categorical value of the Result of the Observation, if applicable and available.
+    - name: value_as_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for the result value (raw integer; no vocabulary table loaded).
+    - name: qualifier_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for qualifier (raw integer; no vocabulary table loaded).
+    - name: unit_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for unit (raw integer; no vocabulary table loaded).
+    - name: provider_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: The provider associated with the observation record.
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 49
+      approx_distinct: 55040
+      min: '71'
+      max: '3713254'
+      description: The visit during which the Observation occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: visit_detail_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Reference to a visit_detail record — the visit_detail table is not loaded here.
+    - name: observation_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 146
+      min: '1734006'
+      max: '368581000119106'
+      description: This field houses the verbatim value from the source data representing the Observation
+        that occurred.
+    - name: observation_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 199
+      min: '28060'
+      max: '45770830'
+      description: Source-vocabulary concept id for observation (raw integer; no vocabulary loaded).
+    - name: unit_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the unit of
+        the Observation that occurred.
+    - name: qualifier_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field houses the verbatim value from the source data representing the qualifier
+        of the Observation that occurred.
+  - name: observation_period
+    row_count: 235222
+    columns:
+    - name: observation_period_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: A Person can have multiple discrete Observation Periods which are identified by the
+        Observation_Period_Id.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: The Person ID of the PERSON record for which the Observation Period is recorded.
+      references: person.person_id
+    - name: observation_period_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 30609
+      min: '1908-09-19'
+      max: '2019-05-13'
+      description: Use this date to determine the start date of the Observation Period.
+    - name: observation_period_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 9900
+      min: '1910-11-25'
+      max: '2019-05-21'
+      description: End of the span over which the person's events are considered captured.
+    - name: period_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '44814724'
+      max: '44814724'
+      samples:
+      - '44814724'
+      description: Provenance/type of the period record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+  - name: person
+    row_count: 235222
+    columns:
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: Unique person (patient) identifier — the cohort spine.
+    - name: gender_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '8507'
+      max: '8532'
+      samples:
+      - '8507'
+      - '8532'
+      description: OMOP standard concept id for gender (raw integer; no vocabulary table loaded).
+    - name: year_of_birth
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 115
+      min: '1908'
+      max: '2019'
+      description: Compute age using year_of_birth.
+    - name: month_of_birth
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 13
+      min: '1'
+      max: '12'
+      samples:
+      - '9'
+      - '5'
+      - '7'
+      - '6'
+      - '3'
+      - '4'
+      description: Month of birth (often NULL; year_of_birth is the reliable field).
+    - name: day_of_birth
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 29
+      min: '1'
+      max: '31'
+      description: Day of birth (often NULL; year_of_birth is the reliable field).
+    - name: birth_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 32326
+      min: '1908-06-12'
+      max: '2019-05-13'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: race_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4
+      min: '0'
+      max: '8527'
+      samples:
+      - '8527'
+      - '8516'
+      - '0'
+      - '8515'
+      description: OMOP standard concept id for race (raw integer; no vocabulary table loaded).
+    - name: ethnicity_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2
+      min: '0'
+      max: '38003563'
+      samples:
+      - '0'
+      - '38003563'
+      description: OMOP standard concept id for ethnicity (raw integer; no vocabulary table loaded).
+    - name: location_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The location refers to the physical address of the person.
+    - name: provider_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The Provider refers to the last known primary care provider (General Practitioner).
+    - name: care_site_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The Care Site refers to where the Provider typically provides the primary care.
+    - name: person_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 103176
+      min: 0000aa22-2819-4932-ac8d-c4effe11efaa
+      max: d9dfb0cb-800e-4a49-a296-be0be287f38f
+      description: Use this field to link back to persons in the source data.
+    - name: gender_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2
+      min: F
+      max: M
+      samples:
+      - F
+      - M
+      description: This field is used to store the biological sex of the person from the source data.
+    - name: gender_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for gender (raw integer; no vocabulary loaded).
+    - name: race_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 6
+      min: asian
+      max: white
+      samples:
+      - other
+      - white
+      - black
+      - hispanic
+      - asian
+      - native
+      description: This field is used to store the race of the person from the source data.
+    - name: race_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for race (raw integer; no vocabulary loaded).
+    - name: ethnicity_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 24
+      min: african
+      max: west_indian
+      samples:
+      - portuguese
+      - chinese
+      - greek
+      - mexican
+      - french_canadian
+      - russian
+      description: This field is used to store the ethnicity of the person from the source data.
+    - name: ethnicity_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for ethnicity (raw integer; no vocabulary loaded).
+  - name: procedure_occurrence
+    row_count: 7882792
+    columns:
+    - name: procedure_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 96025
+      min: '1'
+      max: '100000'
+      description: The unique key given to a procedure record for a person.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 2331
+      min: '1'
+      max: '3004'
+      description: The PERSON_ID of the PERSON for whom the procedure is recorded.
+      references: person.person_id
+    - name: procedure_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 97
+      min: '4010253'
+      max: '45766298'
+      description: OMOP standard concept id for procedure (raw integer; no vocabulary table loaded).
+    - name: procedure_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 9067
+      min: '1911-02-20'
+      max: '2019-05-14'
+      description: Use this date to determine the date the procedure occurred.
+    - name: procedure_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 9067
+      min: '1911-02-20'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: procedure_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '38000275'
+      max: '38000275'
+      samples:
+      - '38000275'
+      description: Provenance/type of the procedure record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: modifier_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for modifier (raw integer; no vocabulary table loaded).
+    - name: quantity
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: If the quantity value is omitted, a single procedure is assumed.
+    - name: provider_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: The provider associated with the procedure record.
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 2844
+      approx_distinct: 34964
+      min: '40'
+      max: '431905'
+      description: The visit during which the procedure occurred.
+      references: visit_occurrence.visit_occurrence_id
+    - name: visit_detail_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Reference to a visit_detail record — the visit_detail table is not loaded here.
+    - name: procedure_source_value
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 91
+      min: '1225002'
+      max: '755621000000101'
+      description: This field houses the verbatim value from the source data representing the procedure
+        that occurred.
+    - name: procedure_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 97
+      min: '4010253'
+      max: '45766298'
+      description: Source-vocabulary concept id for procedure (raw integer; no vocabulary loaded).
+    - name: modifier_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Verbatim procedure modifier code from the source data.
+  - name: visit_occurrence
+    row_count: 11030274
+    columns:
+    - name: visit_occurrence_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 106316
+      min: '40'
+      max: '437141'
+      description: Use this to identify unique interactions between a person and the health care system.
+    - name: person_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3219
+      min: '1'
+      max: '3187'
+      description: Identifier (person id).
+      references: person.person_id
+    - name: visit_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 3
+      min: '9201'
+      max: '9203'
+      samples:
+      - '9202'
+      - '9201'
+      - '9203'
+      description: OMOP standard concept id for visit (raw integer; no vocabulary table loaded).
+    - name: visit_start_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 20687
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: For inpatient visits, the start date is typically the admission date.
+    - name: visit_start_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 20687
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: visit_end_date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 19255
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: For inpatient visits the end date is typically the discharge date.
+    - name: visit_end_datetime
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 19255
+      min: '1910-01-09'
+      max: '2019-05-14'
+      description: Datetime form of the event; usually NULL here — the matching *_date column is the populated
+        one.
+    - name: visit_type_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '44818517'
+      max: '44818517'
+      samples:
+      - '44818517'
+      description: Provenance/type of the visit record (OMOP type concept id; raw integer, no vocabulary
+        loaded).
+    - name: provider_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Provider associated with the visit (one per visit record).
+    - name: care_site_id
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: This field provides information about the Care Site where the Visit took place.
+    - name: visit_source_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 126808
+      min: 000058de-fdd6-4dc0-a8ce-49a8a1230942
+      max: ffff9ef1-2d48-4bdd-8865-65013bb10a47
+      description: Verbatim visit kind from the source data (e.g. inpatient/outpatient).
+    - name: visit_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for visit (raw integer; no vocabulary loaded).
+    - name: admitting_source_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: Source-vocabulary concept id for admitting (raw integer; no vocabulary loaded).
+    - name: admitting_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Verbatim admitting value from the source data (often a numeric code).
+    - name: discharge_to_concept_id
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1
+      min: '0'
+      max: '0'
+      samples:
+      - '0'
+      description: OMOP standard concept id for discharge to (raw integer; no vocabulary table loaded).
+    - name: discharge_to_source_value
+      type: VARCHAR
+      null_count: 100000
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Verbatim discharge to value from the source data (often a numeric code).
+    - name: preceding_visit_occurrence_id
+      type: BIGINT
+      null_count: 3187
+      approx_distinct: 103590
+      min: '40'
+      max: '437140'
+      description: Use this field to find the visit that occurred for the person prior to the given visit.
+      references: visit_occurrence.visit_occurrence_id
+- name: open_targets
+  description: Open Targets Platform 26.03 — target / disease / drug_molecule entities plus aggregated
+    target-disease association scores. NOT OMOP.
+  tables:
+  - name: association_overall_indirect
+    row_count: 12466856
+    columns:
+    - name: disease_id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11353
+      min: DOID_0050890
+      max: PATO_0000070
+      description: EFO disease id; the disease side of the association.
+      references: disease.id
+    - name: target_id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 16125
+      min: ENSG00000000005
+      max: ENSG00000310560
+      description: Ensembl gene id; the target side of the association.
+      references: target.id
+    - name: aggregation_type
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1
+      min: overall
+      max: overall
+      samples:
+      - overall
+      description: How evidence was aggregated for this row (e.g. by datatype/datasource).
+    - name: aggregation_value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1
+      min: None
+      max: None
+      samples:
+      - None
+      description: The specific datatype/datasource the aggregation refers to.
+    - name: association_score
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 57276
+      min: '0.0009683257238804889'
+      max: '0.9300299611524947'
+      description: Overall indirect target–disease association score (0–1, aggregated over all evidence).
+    - name: evidence_count
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 1385
+      min: '1'
+      max: '112752'
+      description: Number of evidence records behind the association score.
+    - name: timeseries
+      type: STRUCT("year" INTEGER, associationScore DOUBLE, novelty DOUBLE, yearlyEvidenceCount BIGINT)[]
+      description: Per-year association score / novelty / evidence counts (nested STRUCT/LIST — UNNEST
+        for BI).
+    - name: current_novelty
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 43720
+      min: '0.0'
+      max: '0.5492734251207451'
+      description: Current novelty score of the target–disease association.
+  - name: disease
+    row_count: 47030
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 69816
+      min: DOID_0050890
+      max: UBERON_0000104
+      description: EFO disease/phenotype id (e.g. EFO_0000305) — the disease primary key.
+    - name: code
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 36839
+      min: http://purl.obolibrary.org/obo/DOID_0050890
+      max: http://www.orpha.net/ORDO/Orphanet_99947
+      description: Full ontology URL/code for the disease.
+    - name: name
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 39070
+      min: ()-2-methylthiazolidine measurement
+      max: хомосексуа́лност
+      description: Disease / phenotype name.
+    - name: description
+      type: VARCHAR
+      null_count: 5376
+      approx_distinct: 40391
+      min: ' and deformed ears.'
+      max: 'α-B-Crystallin (CryAB, gene map locus: 11q22.3-q23.1) is a member of the small heat shock
+        protein (HSP) family, a group of proteins that prevent protein aggregation upon exposure of a
+        cell to heat and/or restore the biological activity of cell substrates. The missense mutation
+        and the deletion mutation of CryAB can cause various forms of muscular disorder, including restrictive,
+        hypertrophic, and dilated cardiomyopathies, heart failure, and skeletal muscle weakness. Collectively,
+        these diseases constitute a rare autosomal-dominant inherited disorder called α-crystallinopathy
+        (crystallinopathy), also known as desmin-related cardiomyopathy.'
+      description: Disease description text.
+    - name: db_x_refs
+      type: VARCHAR[]
+      description: Cross-references to other disease ontologies (nested STRUCT/LIST — UNNEST for BI).
+    - name: parents
+      type: VARCHAR[]
+      description: EFO parent disease ids (nested STRUCT/LIST — UNNEST for BI).
+    - name: exact_synonyms
+      type: VARCHAR[]
+      description: Exact-match synonyms (nested STRUCT/LIST — UNNEST for BI).
+    - name: related_synonyms
+      type: VARCHAR[]
+      description: Related synonyms (nested STRUCT/LIST — UNNEST for BI).
+    - name: narrow_synonyms
+      type: VARCHAR[]
+      description: Narrower-term synonyms (nested STRUCT/LIST — UNNEST for BI).
+    - name: broad_synonyms
+      type: VARCHAR[]
+      description: Broader-term synonyms (nested STRUCT/LIST — UNNEST for BI).
+    - name: obsolete_terms
+      type: VARCHAR[]
+      description: Obsolete term labels (nested STRUCT/LIST — UNNEST for BI).
+    - name: obsolete_x_refs
+      type: VARCHAR[]
+      description: Obsolete cross-references (nested STRUCT/LIST — UNNEST for BI).
+    - name: children
+      type: VARCHAR[]
+      description: EFO child disease ids (nested STRUCT/LIST — UNNEST for BI).
+    - name: ancestors
+      type: VARCHAR[]
+      description: All EFO ancestor disease ids (nested STRUCT/LIST — UNNEST for BI).
+    - name: therapeutic_areas
+      type: VARCHAR[]
+      description: Therapeutic-area EFO ids for the disease (nested STRUCT/LIST — UNNEST for BI).
+    - name: descendants
+      type: VARCHAR[]
+      description: All EFO descendant disease ids (nested STRUCT/LIST — UNNEST for BI).
+    - name: ontology
+      type: STRUCT(isTherapeuticArea BOOLEAN, leaf BOOLEAN, sources STRUCT(url VARCHAR, "name" VARCHAR))
+      description: Ontology metadata incl. therapeutic-area / leaf flags (nested STRUCT/LIST — UNNEST
+        for BI).
+    - name: synonyms
+      type: STRUCT(hasExactSynonym VARCHAR[], hasRelatedSynonym VARCHAR[], hasNarrowSynonym VARCHAR[],
+        hasBroadSynonym VARCHAR[])
+      description: Grouped synonym lists by match type (nested STRUCT/LIST — UNNEST for BI).
+  - name: drug_molecule
+    row_count: 22230
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 23623
+      min: CHEMBL100
+      max: CHEMBL99965
+      description: ChEMBL molecule id — the drug primary key.
+    - name: canonical_smiles
+      type: VARCHAR
+      null_count: 3616
+      approx_distinct: 16113
+      min: B[P@@](=O)(OC[C@H]1O[C@@H](n2cnc3c(N)nc(Cl)nc32)[C@H](O)[C@@H]1O)OP(=O)(O)O
+      max: c1nc[nH]n1
+      description: Canonical SMILES structure string.
+    - name: inchi_key
+      type: VARCHAR
+      null_count: 3616
+      approx_distinct: 17651
+      min: AAAQFGUYHFJNHI-SFHVURJKSA-N
+      max: ZZZQDZDFSDBALW-QMMMGPOBSA-N
+      description: InChIKey structure hash.
+    - name: drug_type
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 12
+      min: Antibody
+      max: Vaccine component
+      samples:
+      - Small molecule
+      - Antibody
+      - Unknown
+      - Vaccine component
+      - Antibody drug conjugate
+      - Enzyme
+      description: Drug modality/type (e.g. Small molecule, Antibody).
+    - name: name
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 23145
+      min: (+)-(6S)-PARASORBIC ACID
+      max: rel-RITODRINE
+      description: Drug name.
+    - name: parent_id
+      type: VARCHAR
+      null_count: 20265
+      approx_distinct: 1661
+      min: CHEMBL1000
+      max: CHEMBL99946
+      description: ChEMBL id of the parent drug.
+      references: drug_molecule.id
+    - name: trade_names
+      type: VARCHAR[]
+      description: Trade names (nested STRUCT/LIST — UNNEST for BI).
+    - name: synonyms
+      type: VARCHAR[]
+      description: Drug synonyms (nested STRUCT/LIST — UNNEST for BI).
+    - name: cross_references
+      type: STRUCT("source" VARCHAR, ids VARCHAR[])[]
+      description: Cross-references to external drug sources (nested STRUCT/LIST — UNNEST for BI).
+    - name: child_chembl_ids
+      type: VARCHAR[]
+      description: ChEMBL ids of child drugs (nested STRUCT/LIST — UNNEST for BI).
+    - name: maximum_clinical_stage
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11
+      min: APPROVAL
+      max: UNKNOWN
+      samples:
+      - PHASE_1_2
+      - PREAPPROVAL
+      - UNKNOWN
+      - PHASE_1
+      - EARLY_PHASE_1
+      - IND
+      description: Highest clinical-trial phase the drug has reached.
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2475
+      min: Antibody drug conjugate drug with a maximum clinical stage of Approval (across all indications),
+        with 3 approved and 3 investigational indications.
+      max: Vaccine component drug.
+      description: Drug description text.
+  - name: target
+    row_count: 78691
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 70966
+      min: ENSG00000000003
+      max: ENSG00000310593
+      description: Ensembl gene id (e.g. ENSG00000012048) — the target primary key.
+    - name: approved_symbol
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 69068
+      min: 5S_rRNA
+      max: snoZ196
+      description: Approved HGNC gene symbol (e.g. BRCA1).
+    - name: biotype
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 32
+      min: ''
+      max: vault_RNA
+      description: Gene biotype (e.g. protein_coding).
+    - name: transcript_ids
+      type: VARCHAR[]
+      description: Ensembl transcript ids (nested STRUCT/LIST — UNNEST for BI).
+    - name: transcripts
+      type: STRUCT(transcriptId VARCHAR, biotype VARCHAR, uniprotId VARCHAR, isUniprotReviewed BOOLEAN,
+        translationId VARCHAR, alphafoldId VARCHAR, uniprotIsoformId VARCHAR, isEnsemblCanonical BOOLEAN)[]
+      description: Per-transcript metadata (nested STRUCT/LIST — UNNEST for BI).
+    - name: canonical_transcript
+      type: STRUCT(id VARCHAR, chromosome VARCHAR, "start" BIGINT, "end" BIGINT, strand VARCHAR)
+      description: Canonical transcript + genomic coordinates (nested STRUCT/LIST — UNNEST for BI).
+    - name: canonical_exons
+      type: VARCHAR[]
+      description: Canonical exon coordinates (nested STRUCT/LIST — UNNEST for BI).
+    - name: genomic_location
+      type: STRUCT(chromosome VARCHAR, "start" BIGINT, "end" BIGINT, strand INTEGER)
+      description: Chromosome / start / end / strand of the gene (nested STRUCT/LIST — UNNEST for BI).
+    - name: alternative_genes
+      type: VARCHAR[]
+      description: Alternative gene ids (nested STRUCT/LIST — UNNEST for BI).
+    - name: approved_name
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 46297
+      min: ''
+      max: zyxin pseudogene 1
+      description: Approved full gene name.
+    - name: go
+      type: STRUCT(id VARCHAR, "source" VARCHAR, evidence VARCHAR, aspect VARCHAR, geneProduct VARCHAR,
+        ecoId VARCHAR)[]
+      description: Gene Ontology annotations (nested STRUCT/LIST — UNNEST for BI).
+    - name: hallmarks
+      type: STRUCT(attributes STRUCT(pmid BIGINT, description VARCHAR, "name" VARCHAR)[], cancerHallmarks
+        STRUCT(pmid BIGINT, description VARCHAR, impact VARCHAR, "label" VARCHAR)[])
+      description: Cancer-hallmark annotations (nested STRUCT/LIST — UNNEST for BI).
+    - name: synonyms
+      type: STRUCT("label" VARCHAR, "source" VARCHAR)[]
+      description: Gene synonyms with source (nested STRUCT/LIST — UNNEST for BI).
+    - name: symbol_synonyms
+      type: STRUCT("label" VARCHAR, "source" VARCHAR)[]
+      description: Symbol synonyms with source (nested STRUCT/LIST — UNNEST for BI).
+    - name: name_synonyms
+      type: STRUCT("label" VARCHAR, "source" VARCHAR)[]
+      description: Name synonyms with source (nested STRUCT/LIST — UNNEST for BI).
+    - name: function_descriptions
+      type: VARCHAR[]
+      description: Free-text function descriptions (nested STRUCT/LIST — UNNEST for BI).
+    - name: subcellular_locations
+      type: STRUCT("location" VARCHAR, "source" VARCHAR, termSL VARCHAR, labelSL VARCHAR)[]
+      description: Subcellular location annotations (nested STRUCT/LIST — UNNEST for BI).
+    - name: target_class
+      type: STRUCT(id BIGINT, "label" VARCHAR, "level" VARCHAR)[]
+      description: ChEMBL target-class hierarchy (nested STRUCT/LIST — UNNEST for BI).
+    - name: obsolete_symbols
+      type: STRUCT("label" VARCHAR, "source" VARCHAR)[]
+      description: Obsolete symbols with source (nested STRUCT/LIST — UNNEST for BI).
+    - name: obsolete_names
+      type: STRUCT("label" VARCHAR, "source" VARCHAR)[]
+      description: Obsolete names with source (nested STRUCT/LIST — UNNEST for BI).
+    - name: constraint
+      type: STRUCT(constraintType VARCHAR, score FLOAT, exp FLOAT, obs INTEGER, oe FLOAT, oeLower FLOAT,
+        oeUpper FLOAT, upperRank INTEGER, upperBin INTEGER, upperBin6 INTEGER)[]
+      description: gnomAD genetic-constraint metrics (nested STRUCT/LIST — UNNEST for BI).
+    - name: tep
+      type: STRUCT(targetFromSourceId VARCHAR, description VARCHAR, therapeuticArea VARCHAR, url VARCHAR)
+      description: Target Enabling Package info (nested STRUCT/LIST — UNNEST for BI).
+    - name: protein_ids
+      type: STRUCT(id VARCHAR, "source" VARCHAR)[]
+      description: Protein ids with source (nested STRUCT/LIST — UNNEST for BI).
+    - name: db_xrefs
+      type: STRUCT(id VARCHAR, "source" VARCHAR)[]
+      description: Cross-references to external databases (nested STRUCT/LIST — UNNEST for BI).
+    - name: chemical_probes
+      type: STRUCT(targetFromSourceId VARCHAR, id VARCHAR, drugFromSourceId VARCHAR, drugId VARCHAR, mechanismOfAction
+        VARCHAR[], origin VARCHAR[], control VARCHAR, isHighQuality BOOLEAN, probesDrugsScore DOUBLE,
+        probeMinerScore DOUBLE, scoreInCells DOUBLE, scoreInOrganisms DOUBLE, urls STRUCT(niceName VARCHAR,
+        url VARCHAR)[])[]
+      description: Chemical-probe annotations (nested STRUCT/LIST — UNNEST for BI).
+    - name: homologues
+      type: STRUCT(speciesId VARCHAR, speciesName VARCHAR, homologyType VARCHAR, targetGeneId VARCHAR,
+        isHighConfidence VARCHAR, targetGeneSymbol VARCHAR, queryPercentageIdentity DOUBLE, targetPercentageIdentity
+        DOUBLE, priority INTEGER)[]
+      description: Homologue genes across species (nested STRUCT/LIST — UNNEST for BI).
+    - name: tractability
+      type: STRUCT(modality VARCHAR, id VARCHAR, "value" BOOLEAN)[]
+      description: Tractability assessments by modality (nested STRUCT/LIST — UNNEST for BI).
+    - name: safety_liabilities
+      type: STRUCT("event" VARCHAR, eventId VARCHAR, effects STRUCT(direction VARCHAR, dosing VARCHAR)[],
+        biosamples STRUCT(tissueLabel VARCHAR, tissueId VARCHAR, cellLabel VARCHAR, cellFormat VARCHAR,
+        cellId VARCHAR)[], datasource VARCHAR, literature VARCHAR, url VARCHAR, studies STRUCT(description
+        VARCHAR, "name" VARCHAR, "type" VARCHAR)[])[]
+      description: Known safety liabilities (nested STRUCT/LIST — UNNEST for BI).
+    - name: pathways
+      type: STRUCT(pathwayId VARCHAR, pathway VARCHAR, topLevelTerm VARCHAR)[]
+      description: Reactome pathway annotations (nested STRUCT/LIST — UNNEST for BI).
+    - name: tss
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 91900
+      min: '577'
+      max: '248936913'
+      description: Transcription start site genomic coordinate.
+- name: cord19
+  description: AllenAI CORD-19 — COVID-19 paper metadata, one row per paper (bibliographic only). Single
+    table `metadata`.
+  tables:
+  - name: metadata
+    row_count: 161564
+    columns:
+    - name: cord_uid
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 100707
+      min: 000ahtxm
+      max: zzzlzo0y
+      description: Unique CORD-19 paper id (not unique per row — the same paper can recur from different
+        sources).
+    - name: sha
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 23611
+      min: ''
+      max: ffff2fb21d4880b63a7cf3849cecc45bc596f4f0
+      description: SHA1 hash(es) of the paper's PDF(s); semicolon-separated when multiple.
+    - name: source_x
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 7
+      min: ArXiv
+      max: WHO
+      samples:
+      - Medline
+      - WHO
+      - ArXiv
+      - BioRxiv
+      - Elsevier
+      - PMC
+      description: Source(s) the paper was received from (e.g. 'Elsevier; PMC; WHO'); semicolon-separated.
+    - name: title
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 97384
+      min: ''
+      max: "\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFFUse of\
+        \ Equine Derived Pericardium as a Biological Cover To Promote Closure of a Complicated Wound With\
+        \ Associated Scleroderma and Raynaud's Disease \uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\uFEFF\
+        ."
+      description: Paper title.
+    - name: doi
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 82662
+      min: ''
+      max: 10.9775/kvfd.2019.22678
+      description: Paper DOI.
+    - name: pmcid
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 28039
+      min: ''
+      max: PMC7313904
+      description: PubMed Central id (begins with 'PMC').
+    - name: pubmed_id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 67936
+      min: ''
+      max: '9988465'
+      description: PubMed id for the paper.
+    - name: license
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 15
+      min: arxiv
+      max: unk
+      samples:
+      - els-covid
+      - arxiv
+      - gold-oa
+      - hybrid-oa
+      - medrxiv
+      - cc-by
+      description: Most permissive license found for the paper (e.g. cc0, cc-by, no-cc).
+    - name: abstract
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 74965
+      min: ''
+      max: ：Vesicovaginal fistula (VVF) is the nonphysiological communication between the bladder and
+        vagina, and surgical closure is the gold treatment standard. Despite that successful closure occurs
+        in around 85% of patients after the first repair, recurrence remains a highly distressing complication
+        for patients and surgeons. The aim of our study was to evaluate the efficacy of a platelet-rich
+        plasma (PRP) injection as a supportive treatment in the surgical repair of recurrent VVF. Between
+        January 2018 and July 2019, 16 patients with recurrent VVF were injected with PRP in a tertiary
+        gynecological department. Subsequently, a surgical Latzko procedure for VVF closure was scheduled
+        6-8 weeks after the PRP injection allowing proper neovascularization and remodeling of surrounding
+        tissues. Patients were considered cured if no leakage was observed after surgery and negative
+        dye test results were indicated at follow-up. All patients who were examined therein remained
+        dry. To the best of our knowledge, this is the first study aiming to assess PRP injections as
+        a supporting treatment prior to surgical procedure for recurrent VVF. Preliminary results are
+        encouraging, and we incorporated this method in our clinical practice. Further reports on a larger
+        group will follow.
+      description: Paper abstract (often NULL — filter when counting).
+    - name: publish_time
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 5271
+      min: ''
+      max: '2021-12-31'
+      description: Published date as VARCHAR, usually 'yyyy-mm-dd' but sometimes only a year; try_cast
+        for dates.
+    - name: authors
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 94089
+      min: ''
+      max: 靖博, 礒部; 新吾, 江端
+      description: Author names, 'Last, First' and semicolon-separated (a single VARCHAR, not a list).
+    - name: journal
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11794
+      min: ''
+      max: 醫學與健康期刊
+      description: Journal name (not normalized; empty when unknown).
+    - name: mag_id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1
+      min: ''
+      max: ''
+      samples:
+      - ''
+      description: Deprecated Microsoft Academic Graph id (mostly NULL).
+    - name: who_covidence_id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 19942
+      min: ''
+      max: '#99975'
+      description: WHO-assigned id for the paper (e.g. '#72306').
+    - name: arxiv_id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1551
+      min: ''
+      max: q-bio/0701038
+      description: arXiv id for the paper.
+    - name: pdf_json_files
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 22236
+      min: ''
+      max: document_parses/pdf_json/ffff2fb21d4880b63a7cf3849cecc45bc596f4f0.json
+      description: Path(s) to parsed PDF full-text JSON; semicolon-separated (the files are not loaded
+        here).
+    - name: pmc_json_files
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 15506
+      min: ''
+      max: document_parses/pmc_json/PMC7313904.xml.json
+      description: Path(s) to parsed PMC full-text JSON; semicolon-separated (the files are not loaded
+        here).
+    - name: url
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 78395
+      min: ''
+      max: https://www.tandfonline.com/doi/pdf/10.4161/auto.4782?needAccess=true
+      description: URL(s) associated with the paper; semicolon-separated.
+    - name: s2_id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 67469
+      min: ''
+      max: '9999568'
+      description: Semantic Scholar id for the paper.
+- name: coherent
+  description: Synthea Coherent — Synthea-native EHR tables (patients, encounters, conditions, ...). SNOMED/RxNorm/LOINC
+    source codes with a human-readable `description` column. NOT OMOP.
+  tables:
+  - name: allergies
+    row_count: 707
+    columns:
+    - name: start
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 298
+      min: '1912-03-18'
+      max: '2011-03-29'
+      description: Event start timestamp (VARCHAR; CAST to DATE/TIMESTAMP).
+    - name: stop
+      type: VARCHAR
+      null_count: 640
+      approx_distinct: 30
+      min: '1993-07-06'
+      max: '2020-11-03'
+      description: Event stop timestamp (VARCHAR; NULL while ongoing).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 324
+      min: 021b10fa-cb4a-6830-4891-66b4d91b46b1
+      max: fe47f88d-4c6a-308e-46bb-ffe899aba1c8
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 285
+      min: 0163f008-3e56-5045-571c-7700bb1bea8f
+      max: ffe14769-1370-58f1-a115-7e538800ab30
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 15
+      min: '91930004'
+      max: '714035009'
+      samples:
+      - '91934008'
+      - '91935009'
+      - '419263009'
+      - '417532002'
+      - '424213003'
+      - '300913006'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 17
+      min: Allergy to bee venom
+      max: Shellfish allergy
+      samples:
+      - Allergy to bee venom
+      - Allergy to wheat
+      - Allergy to tree pollen
+      - Allergy to nut
+      - Allergy to dairy product
+      - Allergy to grass pollen
+      description: Human-readable label for the code (prefer it for grouping/display).
+  - name: careplans
+    row_count: 14115
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 12999
+      min: 0003a966-0ca9-8e5e-933a-c153071a2c15
+      max: fffde6eb-1f6e-f651-5d32-b79975ddda66
+      description: 'Primary key: unique care plan id.'
+    - name: start
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11066
+      min: '1912-03-04'
+      max: '2021-07-21'
+      description: Event start timestamp (VARCHAR; CAST to DATE/TIMESTAMP).
+    - name: stop
+      type: VARCHAR
+      null_count: 7384
+      approx_distinct: 5593
+      min: '1913-08-18'
+      max: '2021-07-21'
+      description: Event stop timestamp (VARCHAR; NULL while ongoing).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3748
+      min: 0020dcbe-9f8d-920d-c008-d68debcef322
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11778
+      min: 0000e73b-75ad-ff38-ebfe-9cf5af5b9d72
+      max: fffce78b-4ae8-3ef8-cd72-2aaebb0fea4a
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 32
+      min: '47387005'
+      max: '869761000000107'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 37
+      min: Agreeing on diabetes care plan
+      max: Wound care
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: reasoncode
+      type: BIGINT
+      null_count: 721
+      approx_distinct: 65
+      min: '1734006'
+      max: '67811000119102'
+      description: Source code (SNOMED) for the reason / indication.
+    - name: reasondescription
+      type: VARCHAR
+      null_count: 721
+      approx_distinct: 66
+      min: Acute bronchitis (disorder)
+      max: Whiplash injury to neck
+      description: Human-readable reason / indication label.
+  - name: conditions
+    row_count: 35874
+    columns:
+    - name: start
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 23084
+      min: '1912-01-22'
+      max: '2021-07-21'
+      description: Event start timestamp (VARCHAR; CAST to DATE/TIMESTAMP).
+    - name: stop
+      type: VARCHAR
+      null_count: 22007
+      approx_distinct: 7786
+      min: '1912-03-30'
+      max: '2021-07-21'
+      description: Event stop timestamp (VARCHAR; NULL while ongoing).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 4060
+      min: 0020dcbe-9f8d-920d-c008-d68debcef322
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 26701
+      min: 0002da20-958d-e81a-10c2-e16a76114ed5
+      max: fffe6e52-a224-9d34-9719-d27d90622ee5
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 136
+      min: '1734006'
+      max: '368581000119106'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 139
+      min: Abnormal gait (finding)
+      max: Whiplash injury to neck
+      description: Human-readable label for the code (prefer it for grouping/display).
+  - name: devices
+    row_count: 552
+    columns:
+    - name: start
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 544
+      min: '1916-01-08T14:24:07Z'
+      max: '2021-06-14T16:01:44Z'
+      description: Event start timestamp (VARCHAR; CAST to DATE/TIMESTAMP).
+    - name: stop
+      type: VARCHAR
+      null_count: 552
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Event stop timestamp (VARCHAR; NULL while ongoing).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 443
+      min: 0020dcbe-9f8d-920d-c008-d68debcef322
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 575
+      min: 0073c113-fd4b-cf47-a8b2-317323c62613
+      max: ff0004ea-2127-986d-1324-2bffaa09abd0
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 4
+      min: '72506001'
+      max: '706004007'
+      samples:
+      - '705643001'
+      - '72506001'
+      - '706004007'
+      - '360066001'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 4
+      min: Coronary artery stent (physical object)
+      max: Left ventricular assist device (physical object)
+      samples:
+      - Implantable cardiac pacemaker (physical object)
+      - Coronary artery stent (physical object)
+      - Implantable defibrillator  device (physical object)
+      - Left ventricular assist device (physical object)
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: udi
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 686
+      min: (01)10039004510123(11)050331(17)300415(10)154496008(21)465240249
+      max: (01)99577582047564(11)571017(17)821101(10)8486008541565897560(21)6787
+      description: Unique Device Identifier (UDI) string.
+  - name: encounters
+    row_count: 285339
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 105051
+      min: 00011cca-7f8f-db57-6487-b317d95759f0
+      max: ffff0e3c-53ae-c75a-db76-587fab6a99d3
+      description: 'Primary key: unique encounter id.'
+    - name: start
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 105495
+      min: '1913-05-23T15:26:53Z'
+      max: '2021-07-24T17:32:52Z'
+      description: Event start timestamp (VARCHAR; CAST to DATE/TIMESTAMP).
+    - name: stop
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 109825
+      min: '1913-05-23T15:41:53Z'
+      max: '2021-07-24T17:47:52Z'
+      description: Event stop timestamp (VARCHAR; NULL while ongoing).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1295
+      min: 0020dcbe-9f8d-920d-c008-d68debcef322
+      max: ffb9b502-7eb5-1a58-a4ac-5b67a9fd2de0
+      description: FK to the patient.
+      references: patients.id
+    - name: organization
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1116
+      min: 000572f9-1532-3e03-9e3c-9a5c8e4461a3
+      max: ff9863d3-3fa3-3861-900e-f00148f5d9c2
+      description: FK to the organization (facility).
+      references: organizations.id
+    - name: provider
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1123
+      min: 007cfad8-0977-3bf2-a2e4-6f60f216cf5a
+      max: ffa8903d-e348-3c41-8794-3f43f552b154
+      description: FK to the provider (clinician).
+      references: providers.id
+    - name: payer
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11
+      min: 047f6ec3-6215-35eb-9608-f9dda363a44c
+      max: d47b3510-2895-3b70-9897-342d681c769d
+      samples:
+      - 7c4411ce-02f1-39b5-b9ec-dfbea9ad3c1a
+      - 7caa7254-5050-3b5e-9eae-bd5ea30e809c
+      - 42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a
+      - 047f6ec3-6215-35eb-9608-f9dda363a44c
+      - b1c428d6-4f07-31e0-90f0-68ffa6ff8c76
+      - b3221cfc-24fb-339e-823d-bc4136cbc4ed
+      description: FK to the payer (insurer).
+      references: payers.id
+    - name: encounterclass
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 6
+      min: ambulatory
+      max: wellness
+      samples:
+      - wellness
+      - ambulatory
+      - urgentcare
+      - emergency
+      - outpatient
+      - inpatient
+      description: Encounter class (e.g. ambulatory, emergency, inpatient, wellness).
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 41
+      min: '22298006'
+      max: '702927004'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 53
+      min: Admission to intensive care unit (procedure)
+      max: posttraumatic stress disorder
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: base_encounter_cost
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 2
+      min: '77.49'
+      max: '129.16'
+      samples:
+      - '129.16'
+      - '77.49'
+      description: Base cost of the encounter before line items (DECIMAL).
+    - name: total_claim_cost
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 2
+      min: '77.49'
+      max: '129.16'
+      samples:
+      - '129.16'
+      - '77.49'
+      description: Total billed cost of the encounter incl. line items (DECIMAL).
+    - name: payer_coverage
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 16
+      min: '0.0'
+      max: '129.16'
+      samples:
+      - '17.49'
+      - '29.16'
+      - '37.49'
+      - '69.16'
+      - '0.0'
+      - '12.49'
+      description: Portion of the cost covered by the payer (DECIMAL).
+    - name: reasoncode
+      type: BIGINT
+      null_count: 76342
+      approx_distinct: 81
+      min: '1734006'
+      max: '368581000119106'
+      description: Source code (SNOMED) for the reason / indication.
+    - name: reasondescription
+      type: VARCHAR
+      null_count: 76342
+      approx_distinct: 84
+      min: Abnormal gait (finding)
+      max: Viral sinusitis (disorder)
+      description: Human-readable reason / indication label.
+  - name: imaging_studies
+    row_count: 6262
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 6933
+      min: 00049470-e937-2572-9e40-f3819e748860
+      max: fffa2284-796c-6c02-c95f-c642c1275020
+      description: 'Primary key: unique imaging study id.'
+    - name: date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 6334
+      min: '1915-10-26T10:05:49Z'
+      max: '2021-07-16T04:43:03Z'
+      description: Event date (VARCHAR; CAST before date math).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1516
+      min: 0074596f-5fd0-7965-db0f-cce71c81567d
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 6409
+      min: 0003e35d-9a9e-2535-a513-4ca06466d69c
+      max: fff4b5d9-71a5-d75f-f9fa-14d3737a4177
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: bodysite_code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 9
+      min: '344001'
+      max: '80891009'
+      samples:
+      - '344001'
+      - '69536005'
+      - '72696002'
+      - '8205005'
+      - '40983000'
+      - '51299004'
+      description: SNOMED code for the imaged body site.
+    - name: bodysite_description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11
+      min: Ankle
+      max: Wrist
+      samples:
+      - Heart structure (body structure)
+      - Thoracic structure (body structure)
+      - Head structure (body structure)
+      - Knee
+      - Structure of right upper quadrant of abdomen
+      - Ankle
+      description: Body-site label.
+    - name: modality_code
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 5
+      min: CR
+      max: US
+      samples:
+      - DX
+      - MR
+      - US
+      - CR
+      - CT
+      description: DICOM modality code (e.g. CT, MR).
+    - name: modality_description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 5
+      min: Computed Radiography
+      max: Ultrasound
+      samples:
+      - Computed Tomography
+      - Digital Radiography
+      - Computed Radiography
+      - Magnetic Resonance
+      - Ultrasound
+      description: Imaging modality label.
+    - name: sop_code
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 4
+      min: 1.2.840.10008.5.1.4.1.1.1.1
+      max: 1.2.840.10008.5.1.4.1.1.6.1
+      samples:
+      - 1.2.840.10008.5.1.4.1.1.6.1
+      - 1.2.840.10008.5.1.4.1.1.3.1
+      - 1.2.840.10008.5.1.4.1.1.4
+      - 1.2.840.10008.5.1.4.1.1.1.1
+      - 1.2.840.10008.5.1.4.1.1.2
+      description: DICOM SOP class code.
+    - name: sop_description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 5
+      min: CT Image Storage
+      max: Ultrasound Multiframe Image Storage
+      samples:
+      - Digital X-Ray Image Storage – for Presentation
+      - MR Image Storage
+      - Ultrasound Image Storage
+      - CT Image Storage
+      - Digital X-Ray Image Storage
+      - Ultrasound Multiframe Image Storage
+      description: DICOM SOP class label.
+  - name: immunizations
+    row_count: 35500
+    columns:
+    - name: date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 30204
+      min: '1945-03-07T22:08:19Z'
+      max: '2021-07-22T14:25:38Z'
+      description: Event date (VARCHAR; CAST before date math).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3863
+      min: 0060bded-e53c-348d-a1ab-fda3b7260151
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 30082
+      min: 00011cca-7f8f-db57-6487-b317d95759f0
+      max: fffdbc48-da73-9ebc-b9bb-3c506e7e2377
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 16
+      min: '3'
+      max: '140'
+      samples:
+      - '43'
+      - '121'
+      - '8'
+      - '21'
+      - '113'
+      - '52'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 16
+      min: DTaP
+      max: zoster
+      samples:
+      - Influenza  seasonal  injectable  preservative free
+      - DTaP
+      - Pneumococcal conjugate PCV 13
+      - pneumococcal polysaccharide vaccine  23 valent
+      - Hep A  ped/adol  2 dose
+      - zoster
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: base_cost
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 1
+      min: '140.52'
+      max: '140.52'
+      samples:
+      - '140.52'
+      description: Base line-item cost (DECIMAL).
+  - name: medications
+    row_count: 371210
+    columns:
+    - name: start
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 44078
+      min: '1914-06-06T19:22:42Z'
+      max: '2021-07-22T14:25:38Z'
+      description: Event start timestamp (VARCHAR; CAST to DATE/TIMESTAMP).
+    - name: stop
+      type: VARCHAR
+      null_count: 2971
+      approx_distinct: 41103
+      min: '1914-08-15T19:22:42Z'
+      max: '2021-07-22T14:25:38Z'
+      description: Event stop timestamp (VARCHAR; NULL while ongoing).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 909
+      min: 0020dcbe-9f8d-920d-c008-d68debcef322
+      max: ff9f350e-e15b-de19-dada-21e5c1337eb0
+      description: FK to the patient.
+      references: patients.id
+    - name: payer
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11
+      min: 047f6ec3-6215-35eb-9608-f9dda363a44c
+      max: d47b3510-2895-3b70-9897-342d681c769d
+      samples:
+      - 5059a55e-5d6e-34d1-b6cb-d83d16e57bcf
+      - 4d71f845-a6a9-3c39-b242-14d25ef86a8d
+      - b1c428d6-4f07-31e0-90f0-68ffa6ff8c76
+      - b3221cfc-24fb-339e-823d-bc4136cbc4ed
+      - 047f6ec3-6215-35eb-9608-f9dda363a44c
+      - 7c4411ce-02f1-39b5-b9ec-dfbea9ad3c1a
+      description: FK to the payer (insurer).
+      references: payers.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 55320
+      min: 00015d55-0e8e-9194-e1f3-40eb38db4677
+      max: fffdbc48-da73-9ebc-b9bb-3c506e7e2377
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 125
+      min: '106258'
+      max: '2123111'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 138
+      min: 0.25 ML Leuprolide Acetate 30 MG/ML Prefilled Syringe
+      max: sacubitril 97 MG / valsartan 103 MG Oral Tablet
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: base_cost
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 27946
+      min: '0.01'
+      max: '7016.64'
+      description: Base line-item cost (DECIMAL).
+    - name: payer_coverage
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 22732
+      min: '0.0'
+      max: '6976.64'
+      description: Portion of the cost covered by the payer (DECIMAL).
+    - name: dispenses
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 693
+      min: '1'
+      max: '26953'
+      description: Number of times the medication was dispensed.
+    - name: totalcost
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 37171
+      min: '0.01'
+      max: '2621530.8'
+      description: Total cost across all dispenses (DECIMAL).
+    - name: reasoncode
+      type: BIGINT
+      null_count: 21440
+      approx_distinct: 38
+      min: '10509002'
+      max: '67811000119102'
+      description: Source code (SNOMED) for the reason / indication.
+    - name: reasondescription
+      type: VARCHAR
+      null_count: 21440
+      approx_distinct: 37
+      min: Acute bacterial sinusitis (disorder)
+      max: Viral sinusitis (disorder)
+      description: Human-readable reason / indication label.
+  - name: observations
+    row_count: 1480409
+    columns:
+    - name: date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 9596
+      min: '1914-06-06T16:33:42Z'
+      max: '2021-07-22T14:25:38Z'
+      description: Event date (VARCHAR; CAST before date math).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 246
+      min: 00a4a086-309e-58e2-9bdc-ead0f5c88ae6
+      max: ff9f350e-e15b-de19-dada-21e5c1337eb0
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 5448
+      approx_distinct: 7310
+      min: 0005a317-1f72-cc89-9601-c8b15831aef8
+      max: ffea1f27-e1be-c72b-47db-6592251b86aa
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 162
+      min: 10230-1
+      max: QOLS
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 156
+      min: Abuse Status [OMAHA]
+      max: pH of Urine by Test strip
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: value
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 4273
+      min: '-0.1'
+      max: not HIV positive
+      description: Observation result value (text or numeric-as-text).
+    - name: units
+      type: VARCHAR
+      null_count: 3323
+      approx_distinct: 32
+      min: '%'
+      max: '{score}'
+      description: Unit of the observation value.
+    - name: type
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2
+      min: numeric
+      max: text
+      samples:
+      - numeric
+      - text
+      description: Value type of the observation (e.g. numeric, text).
+  - name: organizations
+    row_count: 2535
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2754
+      min: 000572f9-1532-3e03-9e3c-9a5c8e4461a3
+      max: fff4d36c-c8b7-3f1d-93fa-4188aec72c68
+      description: 'Primary key: unique organization id.'
+    - name: name
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2496
+      min: A PLUS CHIROPRACTIC MANAGEMENT INC
+      max: ZWANGER AND PESIRI RADIOLOGY GROUP LLP
+      description: Organization (facility) name.
+    - name: address
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1724
+      min: 0 GOVERNORS AVE
+      max: TRI VALLEY COUNSELING
+      description: Street address.
+    - name: city
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 351
+      min: ABINGTON
+      max: YARMOUTH PORT
+      description: City.
+    - name: state
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1
+      min: MA
+      max: MA
+      samples:
+      - MA
+      description: State.
+    - name: zip
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2478
+      min: '01001'
+      max: '2780'
+      description: ZIP/postal code.
+    - name: lat
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 504
+      min: '41.293416'
+      max: '42.851284'
+      description: Latitude of the organization.
+    - name: lon
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 465
+      min: '-73.42904'
+      max: '-69.988926'
+      description: Longitude of the organization.
+    - name: phone
+      type: VARCHAR
+      null_count: 398
+      approx_distinct: 1734
+      min: 202-445-7271
+      max: '9789376000'
+      description: Contact phone number.
+    - name: revenue
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 466
+      min: '129.16'
+      max: '2009568.5699996199'
+      description: Total revenue (DECIMAL).
+    - name: utilization
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 386
+      min: '1'
+      max: '19425'
+      description: Number of encounters handled by the organization.
+  - name: patients
+    row_count: 3539
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 4060
+      min: 0020dcbe-9f8d-920d-c008-d68debcef322
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: 'Primary key: unique patient id.'
+    - name: birthdate
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1641
+      min: '1911-09-06'
+      max: '2003-07-15'
+      description: Date of birth (VARCHAR).
+    - name: deathdate
+      type: VARCHAR
+      null_count: 2000
+      approx_distinct: 1115
+      min: '1916-01-08'
+      max: '2021-07-13'
+      description: Date of death (VARCHAR; NULL if alive).
+    - name: ssn
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3823
+      min: 999-10-1042
+      max: 999-99-9738
+      description: Synthetic Social Security Number.
+    - name: drivers
+      type: VARCHAR
+      null_count: 55
+      approx_distinct: 3804
+      min: S99910004
+      max: S99999982
+      description: Synthetic driver's licence number.
+    - name: passport
+      type: VARCHAR
+      null_count: 104
+      approx_distinct: 3734
+      min: X10029729X
+      max: X9983160X
+      description: Synthetic passport number.
+    - name: prefix
+      type: VARCHAR
+      null_count: 60
+      approx_distinct: 3
+      min: Mr.
+      max: Ms.
+      samples:
+      - None
+      - Mrs.
+      - Ms.
+      - Mr.
+      description: Name prefix (e.g. Mr., Mrs.).
+    - name: first
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2852
+      min: Aaron697
+      max: Óscar156
+      description: First name.
+    - name: last
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 628
+      min: Abbott774
+      max: Zulauf375
+      description: Last name.
+    - name: suffix
+      type: VARCHAR
+      null_count: 3477
+      approx_distinct: 2
+      min: JD
+      max: PhD
+      samples:
+      - JD
+      - MD
+      - None
+      - PhD
+      description: Name suffix (e.g. Jr., PhD).
+    - name: maiden
+      type: VARCHAR
+      null_count: 2424
+      approx_distinct: 492
+      min: Abbott774
+      max: Ávila241
+      description: Maiden name.
+    - name: marital
+      type: VARCHAR
+      null_count: 292
+      approx_distinct: 2
+      min: M
+      max: S
+      samples:
+      - M
+      - S
+      - None
+      description: Marital status (M/S).
+    - name: race
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 5
+      min: asian
+      max: white
+      samples:
+      - black
+      - other
+      - white
+      - asian
+      - native
+      description: Race.
+    - name: ethnicity
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2
+      min: hispanic
+      max: nonhispanic
+      samples:
+      - hispanic
+      - nonhispanic
+      description: Ethnicity.
+    - name: gender
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2
+      min: F
+      max: M
+      samples:
+      - F
+      - M
+      description: Gender (M/F).
+    - name: birthplace
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 411
+      min: Abington  Massachusetts  US
+      max: Łódź  Łódź  PL
+      description: Place of birth.
+    - name: address
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3036
+      min: 100 Funk Fork Unit 11
+      max: 999 Sipes Trafficway Apt 46
+      description: Street address.
+    - name: city
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 310
+      min: Abington
+      max: Yarmouth Port
+      description: City.
+    - name: state
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1
+      min: Massachusetts
+      max: Massachusetts
+      samples:
+      - Massachusetts
+      description: State.
+    - name: county
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 13
+      min: Barnstable County
+      max: Worcester County
+      samples:
+      - Bristol County
+      - Barnstable County
+      - Suffolk County
+      - Hampshire County
+      - Dukes County
+      - Essex County
+      description: County.
+    - name: zip
+      type: BIGINT
+      null_count: 1660
+      approx_distinct: 323
+      min: '1001'
+      max: '2861'
+      description: ZIP/postal code.
+    - name: lat
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 3217
+      min: '41.2439831134442'
+      max: '42.89646550995282'
+      description: Latitude of the patient address.
+    - name: lon
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 3322
+      min: '-73.42989501501283'
+      max: '-69.98369503600256'
+      description: Longitude of the patient address.
+    - name: healthcare_expenses
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 3873
+      min: '1653.23'
+      max: '2188570.01'
+      description: Total healthcare expenses paid by the patient (DECIMAL).
+    - name: healthcare_coverage
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 3263
+      min: '0.0'
+      max: '567354.9200000002'
+      description: Total healthcare costs covered by insurance (DECIMAL).
+  - name: payer_transitions
+    row_count: 16328
+    columns:
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3913
+      min: 0060bded-e53c-348d-a1ab-fda3b7260151
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: FK to the patient.
+      references: patients.id
+    - name: start_year
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 117
+      min: '1911'
+      max: '2021'
+      description: Year the coverage period began.
+    - name: end_year
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 117
+      min: '1911'
+      max: '2021'
+      description: Year the coverage period ended.
+    - name: payer
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11
+      min: 047f6ec3-6215-35eb-9608-f9dda363a44c
+      max: d47b3510-2895-3b70-9897-342d681c769d
+      samples:
+      - 7c4411ce-02f1-39b5-b9ec-dfbea9ad3c1a
+      - 42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a
+      - 7caa7254-5050-3b5e-9eae-bd5ea30e809c
+      - b1c428d6-4f07-31e0-90f0-68ffa6ff8c76
+      - b3221cfc-24fb-339e-823d-bc4136cbc4ed
+      - 047f6ec3-6215-35eb-9608-f9dda363a44c
+      description: FK to the payer (insurer).
+      references: payers.id
+    - name: ownership
+      type: VARCHAR
+      null_count: 1136
+      approx_distinct: 3
+      min: Guardian
+      max: Spouse
+      samples:
+      - None
+      - Self
+      - Guardian
+      - Spouse
+      description: Plan ownership type (e.g. Guardian, Self, Spouse).
+  - name: payers
+    row_count: 10
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11
+      min: 047f6ec3-6215-35eb-9608-f9dda363a44c
+      max: d47b3510-2895-3b70-9897-342d681c769d
+      samples:
+      - 5059a55e-5d6e-34d1-b6cb-d83d16e57bcf
+      - 4d71f845-a6a9-3c39-b242-14d25ef86a8d
+      - 7caa7254-5050-3b5e-9eae-bd5ea30e809c
+      - 7c4411ce-02f1-39b5-b9ec-dfbea9ad3c1a
+      - 42c4fca7-f8a9-3cd1-982a-dd9751bf3e2a
+      - b3221cfc-24fb-339e-823d-bc4136cbc4ed
+      description: 'Primary key: unique payer id.'
+    - name: name
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11
+      min: Aetna
+      max: UnitedHealthcare
+      samples:
+      - Medicaid
+      - Humana
+      - Aetna
+      - Medicare
+      - Blue Cross Blue Shield
+      - Dual Eligible
+      description: Payer (insurer) name.
+    - name: address
+      type: VARCHAR
+      null_count: 1
+      approx_distinct: 6
+      min: 151 Farmington Ave
+      max: Michigan Plaza
+      samples:
+      - Michigan Plaza
+      - None
+      - 220 Virginia Ave
+      - 151 Farmington Ave
+      - 900 Cottage Grove Rd
+      - 7500 Security Blvd
+      description: Street address.
+    - name: city
+      type: VARCHAR
+      null_count: 1
+      approx_distinct: 6
+      min: Baltimore
+      max: Minnetonka
+      samples:
+      - None
+      - Hartford
+      - Indianapolis
+      - Louisville
+      - Chicago
+      - Bloomfield
+      description: City.
+    - name: state_headquartered
+      type: VARCHAR
+      null_count: 1
+      approx_distinct: 6
+      min: CT
+      max: MN
+      samples:
+      - None
+      - KY
+      - IL
+      - CT
+      - IN
+      - MD
+      description: State where the payer is headquartered.
+    - name: zip
+      type: BIGINT
+      null_count: 1
+      approx_distinct: 7
+      min: '6002'
+      max: '60007'
+      samples:
+      - '40018'
+      - '60007'
+      - '46204'
+      - '21244'
+      - '6002'
+      - '55436'
+      description: ZIP/postal code.
+    - name: phone
+      type: VARCHAR
+      null_count: 1
+      approx_distinct: 9
+      min: 1-800-262-2583
+      max: 1-888-545-5205
+      samples:
+      - 1-800-262-2583
+      - 1-800-872-3862
+      - 1-877-267-2323
+      - 1-844-330-7799
+      - None
+      - 1-800-331-1476
+      description: Contact phone number.
+    - name: amount_covered
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 11
+      min: '0.0'
+      max: '55287688.84'
+      samples:
+      - '5573910.99'
+      - '55287688.84'
+      - '2846067.23'
+      - '9132657.36'
+      - '2183241.4'
+      - '1931734.08'
+      description: Total amount covered by this payer (DECIMAL).
+    - name: amount_uncovered
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 10
+      min: '1234365.0'
+      max: '41144732.2'
+      samples:
+      - '4301535.95'
+      - '6251049.07'
+      - '2904000.0'
+      - '12683784.12'
+      - '4866126.79'
+      - '1234365.0'
+      description: Total amount not covered by this payer (DECIMAL).
+    - name: revenue
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 10
+      min: '0.0'
+      max: '670676600.0'
+      samples:
+      - '559556000.0'
+      - '606112500.0'
+      - '624828300.0'
+      - '670676600.0'
+      - '16904000.0'
+      - '0.0'
+      description: Total revenue collected by the payer (DECIMAL).
+    - name: covered_encounters
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 10
+      min: '0'
+      max: '197870'
+      samples:
+      - '17723'
+      - '55180'
+      - '97176'
+      - '58398'
+      - '46719'
+      - '0'
+      description: Count of encounters covered by this payer.
+    - name: uncovered_encounters
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 7
+      min: '0'
+      max: '50440'
+      samples:
+      - '7335'
+      - '6107'
+      - '0'
+      - '6375'
+      - '38250'
+      - '7959'
+      description: Count of encounters not covered by this payer.
+    - name: covered_medications
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 5
+      min: '0'
+      max: '195721'
+      samples:
+      - '195721'
+      - '24201'
+      - '27607'
+      - '17924'
+      - '0'
+      description: Count of medications covered by this payer.
+    - name: uncovered_medications
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 7
+      min: '0'
+      max: '31784'
+      samples:
+      - '27875'
+      - '31784'
+      - '26214'
+      - '25612'
+      - '27672'
+      - '0'
+      description: Count of medications not covered by this payer.
+    - name: covered_procedures
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 10
+      min: '0'
+      max: '187320'
+      samples:
+      - '56775'
+      - '48681'
+      - '0'
+      - '48315'
+      - '187320'
+      - '52139'
+      description: Count of procedures covered by this payer.
+    - name: uncovered_procedures
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 7
+      min: '0'
+      max: '43627'
+      samples:
+      - '1822'
+      - '1039'
+      - '43627'
+      - '0'
+      - '1272'
+      - '1350'
+      description: Count of procedures not covered by this payer.
+    - name: covered_immunizations
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 10
+      min: '0'
+      max: '35184'
+      samples:
+      - '16838'
+      - '19128'
+      - '17562'
+      - '35184'
+      - '19914'
+      - '16413'
+      description: Count of immunizations covered by this payer.
+    - name: uncovered_immunizations
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 7
+      min: '0'
+      max: '14257'
+      samples:
+      - '981'
+      - '0'
+      - '14257'
+      - '1248'
+      - '912'
+      - '1629'
+      description: Count of immunizations not covered by this payer.
+    - name: unique_customers
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 11
+      min: '185'
+      max: '1795'
+      samples:
+      - '992'
+      - '1005'
+      - '956'
+      - '924'
+      - '374'
+      - '1039'
+      description: Distinct members covered by this payer.
+    - name: qols_avg
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 11
+      min: '0.4948245764673261'
+      max: '1.139541033100371'
+      samples:
+      - '0.4948245764673261'
+      - '0.8067046273565823'
+      - '0.9227259262319373'
+      - '0.9214402852872593'
+      - '1.139541033100371'
+      - '0.9166898216870857'
+      description: Average quality-of-life score across the payer's members.
+    - name: member_months
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 10
+      min: '41052'
+      max: '412452'
+      samples:
+      - '305868'
+      - '289512'
+      - '208752'
+      - '303576'
+      - '280644'
+      - '412452'
+      description: Total member-months of coverage.
+  - name: procedures
+    row_count: 134385
+    columns:
+    - name: date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 69478
+      min: '1912-01-28T02:55:08Z'
+      max: '2021-07-21T21:20:13Z'
+      description: Event date (VARCHAR; CAST before date math).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 3034
+      min: 0020dcbe-9f8d-920d-c008-d68debcef322
+      max: fff4d179-9b5d-2e55-81a1-2c7e6d7a2632
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 64277
+      min: 0000fbb0-3fc0-14fc-6be4-982db156e273
+      max: fffe975e-a28d-0ae6-01d6-76b0fc2264f0
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 159
+      min: '1225002'
+      max: '16335031000119103'
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 197
+      min: Admission to burn unit
+      max: X-ray or wrist
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: base_cost
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 84007
+      min: '10.28'
+      max: '390445.63'
+      description: Base line-item cost (DECIMAL).
+    - name: reasoncode
+      type: BIGINT
+      null_count: 53457
+      approx_distinct: 50
+      min: '1734006'
+      max: '368581000119106'
+      description: Source code (SNOMED) for the reason / indication.
+    - name: reasondescription
+      type: VARCHAR
+      null_count: 53457
+      approx_distinct: 49
+      min: Acute bronchitis (disorder)
+      max: Tubal pregnancy
+      description: Human-readable reason / indication label.
+  - name: providers
+    row_count: 13920
+    columns:
+    - name: id
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 11868
+      min: 000b8a8f-b386-3803-83ca-382edd77112a
+      max: fffb87ab-11d9-3741-8d19-2b131bd4175f
+      description: 'Primary key: unique provider id.'
+    - name: organization
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2754
+      min: 000572f9-1532-3e03-9e3c-9a5c8e4461a3
+      max: fff4d36c-c8b7-3f1d-93fa-4188aec72c68
+      description: FK to the organization (facility).
+      references: organizations.id
+    - name: name
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 9055
+      min: Aaron697 Gusikowski974
+      max: Óscar156 Rangel145
+      description: Provider (clinician) name.
+    - name: gender
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2
+      min: F
+      max: M
+      samples:
+      - M
+      - F
+      description: Provider gender (M/F).
+    - name: speciality
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 67
+      min: ADDICTION MEDICINE
+      max: VASCULAR SURGERY
+      description: Provider specialty.
+    - name: address
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1724
+      min: 0 GOVERNORS AVE
+      max: TRI VALLEY COUNSELING
+      description: Street address.
+    - name: city
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 351
+      min: ABINGTON
+      max: YARMOUTH PORT
+      description: City.
+    - name: state
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 1
+      min: MA
+      max: MA
+      samples:
+      - MA
+      description: State.
+    - name: zip
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 2478
+      min: '01001'
+      max: '2780'
+      description: ZIP/postal code.
+    - name: lat
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 504
+      min: '41.293416'
+      max: '42.851284'
+      description: Latitude of the provider location.
+    - name: lon
+      type: DOUBLE
+      null_count: 0
+      approx_distinct: 465
+      min: '-73.42904'
+      max: '-69.988926'
+      description: Longitude of the provider location.
+    - name: utilization
+      type: BIGINT
+      null_count: 0
+      approx_distinct: 387
+      min: '0'
+      max: '19425'
+      description: Number of encounters handled by the provider.
+  - name: supplies
+    row_count: 0
+    columns:
+    - name: date
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Event date (VARCHAR; CAST before date math).
+    - name: patient
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 0
+      min: null
+      max: null
+      description: FK to the patient.
+      references: patients.id
+    - name: encounter
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 0
+      min: null
+      max: null
+      description: FK to the encounter during which this was recorded.
+      references: encounters.id
+    - name: code
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Source clinical code (system depends on the table — SNOMED / RxNorm / LOINC / CVX).
+    - name: description
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Human-readable label for the code (prefer it for grouping/display).
+    - name: quantity
+      type: VARCHAR
+      null_count: 0
+      approx_distinct: 0
+      min: null
+      max: null
+      description: Quantity of the supply used.
